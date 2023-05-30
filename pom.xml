@@ -7,7 +7,7 @@
     <modules>
         <module>web</module>
         <module>model</module>
-        <module>persistance</module>
+        <module>persistence</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -58,6 +58,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
