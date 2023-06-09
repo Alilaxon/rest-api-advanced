@@ -1,6 +1,6 @@
 package com.epam.esm.model.service;
 
-import com.epam.esm.model.dto.GiftDto;
+import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.model.exception.GiftNameIsReservedException;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface GiftService {
 
 
-    GiftCertificate create(GiftDto giftDto) throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException;
+    GiftCertificate create(GiftDTO giftDto) throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException;
 
     List<GiftCertificate> getAll();
 
@@ -23,5 +23,5 @@ public interface GiftService {
 
     Long deleteById(Long id);
 
-    GiftCertificate update(Long id, GiftDto giftDto);
+    GiftCertificate update(Long id, GiftDTO giftDto);
 }

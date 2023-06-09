@@ -1,13 +1,13 @@
 package com.epam.esm.model.utils;
 
-import com.epam.esm.model.dto.TagDto;
+import com.epam.esm.model.dto.TagDTO;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.model.exception.InvalidTagDtoException;
 import com.epam.esm.model.exception.InvalidTagException;
 
 public class TagValidator {
 
-    public static void checkTagDto (TagDto dto) throws InvalidTagDtoException {
+    public static void checkTagDto (TagDTO dto) throws InvalidTagDtoException {
         if(dto.getName() == null){
             throw new InvalidTagDtoException();
         }

@@ -22,8 +22,28 @@ CREATE TABLE gifts
 
 
 CREATE TABLE gifts_tags (
-                            id SERIAL NOT NULL ,
-                            gift_id INT REFERENCES gifts (id) ON DELETE CASCADE ,
-                            tag_id INT REFERENCES tags (id) ON DELETE CASCADE ,
-                            PRIMARY KEY (id)
+ id SERIAL NOT NULL ,
+ gift_id INT REFERENCES gifts (id) ON DELETE CASCADE ,
+ tag_id INT REFERENCES tags (id) ON DELETE CASCADE ,
+ PRIMARY KEY (id)
+);
+
+CREATE TABLE users
+(
+    id           SERIAL           NOT NULL,
+    user_name    VARCHAR(64)      NOT NULL,
+    password     VARCHAR(64)      NOT NULL,
+    email        VARCHAR(64)      NOT NULL,
+    PRIMARY KEY (id)
+
+);
+
+CREATE TABLE orders
+(
+    id            SERIAL       NOT NULL,
+    order_price    INT         NOT NULL,
+    user_id       INT          NOT NULL,
+    gift_id       INT          NOT NULL,
+    PRIMARY KEY (id)
+
 );

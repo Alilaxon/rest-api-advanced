@@ -1,5 +1,5 @@
 package com.epam.esm.web.controller;
-import com.epam.esm.model.dto.GiftDto;
+import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.model.exception.GiftNameIsReservedException;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
@@ -70,7 +70,7 @@ public class GiftController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Long> create(@RequestBody GiftDto giftDto) throws GiftNameIsReservedException, InvalidTagException, InvalidGiftDtoException {
+    public ResponseEntity<Long> create(@RequestBody GiftDTO giftDto) throws GiftNameIsReservedException, InvalidTagException, InvalidGiftDtoException {
 
         log.info("Gift '{}' will be create",giftDto.getName());
         Long id = giftCertificateService.create(giftDto).getId();
@@ -88,7 +88,7 @@ public class GiftController {
 
     @PatchMapping("/update/{id}")
     public ResponseEntity<Long> create (@PathVariable("id") Long id,
-                                        @RequestBody GiftDto giftDto){
+                                        @RequestBody GiftDTO giftDto){
 
         log.info("Update Gift by id = '{}'",id);
         Long resultId = giftCertificateService.update(id,giftDto).getId();

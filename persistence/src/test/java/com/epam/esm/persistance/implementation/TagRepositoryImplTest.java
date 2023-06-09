@@ -2,7 +2,7 @@ package com.epam.esm.persistance.implementation;
 
 import com.epam.esm.persistance.config.EmbeddedJdbcConfig;
 import com.epam.esm.persistance.dao.builders.TagBuilder;
-import com.epam.esm.persistance.dao.impl.TagRepoImpl;
+import com.epam.esm.persistance.dao.impl.TagRepositoryImpl;
 import com.epam.esm.persistance.entity.Tag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {EmbeddedJdbcConfig.class})
 @ActiveProfiles("integration-test")
-class TagDaoTest {
+class TagRepositoryImplTest {
 
     private static Tag tag;
 
-    private TagRepoImpl tagDao;
+    private TagRepositoryImpl tagDao;
 
     @Autowired
     private DataSource dataSource;
@@ -31,7 +31,7 @@ class TagDaoTest {
     @BeforeEach
     void setUp(){
 
-        tagDao = new TagRepoImpl(dataSource);
+        tagDao = new TagRepositoryImpl(dataSource);
 
         tag = new Tag(1L,"red");
 

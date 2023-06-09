@@ -1,18 +1,39 @@
 package com.epam.esm.persistance.entity;
 
+import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(schema = "gifts")
 public class GiftCertificate {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "gift_name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "price")
     private Long price;
+
+    @Column(name = "duration")
     private Long duration;
+
+    @Column(name = "create_date")
     private String createDate;
+
+    @Column(name = "last_Update_Date")
     private String lastUpdateDate;
+    @ManyToMany
+    @JoinTable(name = "gift_tags",
+    joinColumns = @JoinColumn(name = "gift_id"),
+    inverseJoinColumns = @JoinColumn(name = "gift_id"))
+    private List<Tag> tags;
 
     public List<Tag> getTags() {
 
@@ -24,7 +45,7 @@ public class GiftCertificate {
         this.tags = tags;
     }
 
-    private List<Tag> tags;
+
 
     public GiftCertificate() {
     }

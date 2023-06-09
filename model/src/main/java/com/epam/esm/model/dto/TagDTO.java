@@ -3,16 +3,16 @@ package com.epam.esm.model.dto;
 import java.beans.ConstructorProperties;
 import java.util.Objects;
 
-public class TagDto {
+public class TagDTO {
 
     private Long id;
 
     private String name;
 
-    public TagDto() {
+    public TagDTO() {
     }
 @ConstructorProperties("name")
-    public TagDto(String name) {
+    public TagDTO(String name) {
         this.name = name;
     }
 
@@ -35,8 +35,8 @@ public class TagDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TagDto)) return false;
-        TagDto tagDto = (TagDto) o;
+        if (!(o instanceof TagDTO)) return false;
+        TagDTO tagDto = (TagDTO) o;
         return name.equals(tagDto.name);
     }
 

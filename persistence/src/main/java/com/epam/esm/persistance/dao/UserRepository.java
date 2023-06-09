@@ -1,4 +1,9 @@
 package com.epam.esm.persistance.dao;
 
-public interface UserRepository {
+import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.persistance.entity.User;
+
+public interface UserRepository extends DefaultRepository<User> {
+
+
 }

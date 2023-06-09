@@ -1,7 +1,7 @@
 package com.epam.esm.persistance.implementation;
 
 import com.epam.esm.persistance.config.EmbeddedJdbcConfig;
-import com.epam.esm.persistance.dao.impl.GiftRepoImpl;
+import com.epam.esm.persistance.dao.impl.GiftRepositoryImpl;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,17 +20,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {EmbeddedJdbcConfig.class})
 @ActiveProfiles("integration-test")
-class GiftDaoTest {
+class GiftRepositoryImplTest {
 
     private static GiftCertificate gift;
     private static Tag tag;
     @Autowired
     private DataSource dataSource;
-    private GiftRepoImpl giftDao;
+    private GiftRepositoryImpl giftDao;
 
     @BeforeEach
     void setUp() {
-        giftDao = new GiftRepoImpl(dataSource);
+        giftDao = new GiftRepositoryImpl(dataSource);
 
         tag = new Tag(1l, "red");
 
