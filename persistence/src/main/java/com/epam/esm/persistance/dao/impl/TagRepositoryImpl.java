@@ -14,13 +14,13 @@ import java.util.List;
 
 
 @Repository
-public class TagRepoImpl implements TagRepository {
+public class TagRepositoryImpl implements TagRepository {
 
-    private static final Logger log = LogManager.getLogger(TagRepoImpl.class);
+    private static final Logger log = LogManager.getLogger(TagRepositoryImpl.class);
     private final DataSource dataSource;
 
 
-    public TagRepoImpl(DataSource dataSource) {
+    public TagRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

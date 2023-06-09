@@ -4,7 +4,7 @@ import com.epam.esm.model.service.impl.GiftServiceImpl;
 import com.epam.esm.persistance.dao.GiftRepository;
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.dao.builders.GiftBuilder;
-import com.epam.esm.model.dto.GiftDto;
+import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.model.exception.GiftNameIsReservedException;
@@ -31,7 +31,7 @@ class GiftCertificateServiceTest {
 
     private  GiftCertificate GIFT;
 
-    private GiftDto GIFT_DTO;
+    private GiftDTO GIFT_DTO;
 
     private final Long ID = 1L;
 
@@ -66,7 +66,7 @@ class GiftCertificateServiceTest {
                 .tags(List.of(TAG_ONE,TAG_TWO))
                 .build();
 
-        GIFT_DTO = new GiftDto(NAME,DESCRIPTION,PRICE,DURATION,List.of(TAG_ONE));
+        GIFT_DTO = new GiftDTO(NAME,DESCRIPTION,PRICE,DURATION,List.of(TAG_ONE));
 
     }
 

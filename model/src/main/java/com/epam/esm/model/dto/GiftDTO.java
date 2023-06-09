@@ -5,7 +5,7 @@ import com.epam.esm.persistance.entity.Tag;
 import java.beans.ConstructorProperties;
 import java.util.List;
 
-public class GiftDto {
+public class GiftDTO {
 
 
     private Long id;
@@ -21,10 +21,10 @@ public class GiftDto {
     private List<Tag> tags;
 
 
-    public GiftDto() {
+    public GiftDTO() {
     }
     @ConstructorProperties({"name", "description","price","duration","tags"})
-    public GiftDto(String name, String description, Long price, Long duration,List<Tag> tags) {
+    public GiftDTO(String name, String description, Long price, Long duration, List<Tag> tags) {
         this.name = name;
         this.description = description;
         this.price = price;

@@ -1,6 +1,6 @@
 package com.epam.esm.dto;
 
-import com.epam.esm.model.dto.GiftDto;
+import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.persistance.entity.Tag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,9 +9,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GiftDtoTest {
+class GiftDTOTest {
 
-    private GiftDto GIFT_DTO;
+    private GiftDTO GIFT_DTO;
 
 
     private final Long ID = 1L;
@@ -28,7 +28,7 @@ class GiftDtoTest {
 
     @BeforeEach
     void setUp(){
-        GIFT_DTO = new GiftDto();
+        GIFT_DTO = new GiftDTO();
 
 
     }

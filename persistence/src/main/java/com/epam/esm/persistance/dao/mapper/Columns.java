@@ -21,4 +21,10 @@ public class Columns {
     public static final String TAG_ID = "tag_id";
 
     public static final String TAG_NAME = "tag_name";
+
+    public static final String USERNAME = "user_name";
+
+    public static final String PASSWORD = "password";
+
+    public static final String EMAIL = "email";
 }

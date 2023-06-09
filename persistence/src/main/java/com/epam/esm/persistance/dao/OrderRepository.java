@@ -1,4 +1,6 @@
 package com.epam.esm.persistance.dao;
 
-public interface OrderRepository {
+import com.epam.esm.persistance.entity.Order;
+
+public interface OrderRepository extends DefaultRepository<Order>{
 }

@@ -1,7 +1,7 @@
 package com.epam.esm.model.service;
 
 
-import com.epam.esm.model.dto.TagDto;
+import com.epam.esm.model.dto.TagDTO;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagDtoException;
@@ -13,7 +13,7 @@ public interface TagService {
 
 
 
-    Tag create (TagDto tagDto) throws TagNameIsReservedException, InvalidGiftDtoException, InvalidTagDtoException;
+    Tag create (TagDTO tagDto) throws TagNameIsReservedException, InvalidGiftDtoException, InvalidTagDtoException;
 
     Tag getById(Long id);
 

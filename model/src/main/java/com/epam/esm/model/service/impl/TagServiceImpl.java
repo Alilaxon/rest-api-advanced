@@ -2,7 +2,7 @@ package com.epam.esm.model.service.impl;
 
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.dao.builders.TagBuilder;
-import com.epam.esm.model.dto.TagDto;
+import com.epam.esm.model.dto.TagDTO;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagDtoException;
@@ -17,20 +17,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TagServiceImp implements TagService {
+public class TagServiceImpl implements TagService {
 
-    private static final Logger log = LogManager.getLogger(TagServiceImp.class);
+    private static final Logger log = LogManager.getLogger(TagServiceImpl.class);
 
     private final TagRepository tagRepository;
 
     @Autowired
-    public TagServiceImp(TagRepository tagRepository) {
+    public TagServiceImpl(TagRepository tagRepository) {
 
         this.tagRepository = tagRepository;
     }
 
     @Override
-    public Tag create(TagDto tagDto) throws TagNameIsReservedException, InvalidGiftDtoException, InvalidTagDtoException {
+    public Tag create(TagDTO tagDto) throws TagNameIsReservedException, InvalidGiftDtoException, InvalidTagDtoException {
 
         TagValidator.checkTagDto(tagDto);
 
@@ -64,7 +64,7 @@ public class TagServiceImp implements TagService {
         return tagRepository.Delete(id);
     }
 
-    private boolean checkTagName(TagDto tagDto) {
+    private boolean checkTagName(TagDTO tagDto) {
 
         return tagRepository.existsByName(tagDto.getName());
     }

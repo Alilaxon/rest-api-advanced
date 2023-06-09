@@ -1,7 +1,7 @@
 package com.epam.esm.dto;
 
 
-import com.epam.esm.model.dto.TagDto;
+import com.epam.esm.model.dto.TagDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,14 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TagDtoTest {
 
-    TagDto tagDto;
+    TagDTO tagDto;
 
     Long ID = 1L;
 
     String NAME = "red";
     @BeforeEach
     void setUp(){
-        tagDto = new TagDto();
+        tagDto = new TagDTO();
     }
     @Test
     void tagDtoSettersAndGettersTest(){

@@ -1,6 +1,6 @@
 package com.epam.esm.model.utils;
 
-import com.epam.esm.model.dto.GiftDto;
+import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 
 public class GiftValidator {
@@ -8,7 +8,7 @@ public class GiftValidator {
     private final static Long PRICE_MAX_VALUE = 10000000L;
     private final static Long DURATION_MAX_VALUE = 365L;
 
-    public static void checkGiftDto (GiftDto dto) throws InvalidGiftDtoException {
+    public static void checkGiftDto (GiftDTO dto) throws InvalidGiftDtoException {
         checkName(dto.getName());
         checkPrice(dto.getPrice());
         checkDuration(dto.getDuration());

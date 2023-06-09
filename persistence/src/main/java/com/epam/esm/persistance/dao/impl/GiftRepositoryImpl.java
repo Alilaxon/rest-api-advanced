@@ -19,14 +19,14 @@ import java.util.List;
 
 
 @Repository
-public class GiftRepoImpl implements GiftRepository {
+public class GiftRepositoryImpl implements GiftRepository {
 
-    private static final Logger log = LogManager.getLogger(GiftRepoImpl.class);
+    private static final Logger log = LogManager.getLogger(GiftRepositoryImpl.class);
 
     private final DataSource dataSource;
 
     @Autowired
-    public GiftRepoImpl(DataSource dataSource
+    public GiftRepositoryImpl(DataSource dataSource
     ) {
         this.dataSource = dataSource;
     }
@@ -89,28 +89,18 @@ public class GiftRepoImpl implements GiftRepository {
 
         GiftCertificate giftCertificate = new GiftCertificate();
         try (Connection connection = dataSource.getConnection()) {
-
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM gifts WHERE id =?");
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
-
                 giftCertificate = (GiftMapper.extractGift(resultSet,findByGiftId(resultSet.getLong(Columns.ID))));
-
             }
             statement.close();
 
             return giftCertificate;
 
-
         } catch (SQLException e) {
-
-            log.error("Error in method findById with id = {} ",id);
-
             throw new RuntimeException(e);
-
-
         }
     }
 
@@ -134,7 +124,7 @@ public class GiftRepoImpl implements GiftRepository {
 
 
         } catch (SQLException e) {
-            log.error("Error in method findByName with name = {} ",name);
+
             throw new RuntimeException(e);
         }
     }
@@ -154,7 +144,7 @@ public class GiftRepoImpl implements GiftRepository {
             return existsByName;
 
         } catch (Exception e) {
-            log.error("Error in method existsByName with name = {} ",name);
+
             throw new RuntimeException(e);
         }
 
@@ -180,7 +170,7 @@ public class GiftRepoImpl implements GiftRepository {
             statement.close();
 
         } catch (SQLException e) {
-            log.error("Error in method findAll");
+
             throw new RuntimeException(e);
         }
         return giftCertificateList;
@@ -208,12 +198,11 @@ public class GiftRepoImpl implements GiftRepository {
             statement.close();
 
         } catch (SQLException e) {
-            log.error("Error in method findAllByTag with tag id = {} ",id);
+
             throw new RuntimeException(e);
+
         }
-        for (GiftCertificate gift: giftCertificateList) {
-        //    log.info("{}",gift);
-        }
+
 
         return giftCertificateList;
     }
@@ -239,7 +228,7 @@ public class GiftRepoImpl implements GiftRepository {
             statement.close();
 
         } catch (SQLException e) {
-            log.error("Error in method findAllByPartOfDescription with description = {} ",part);
+
             throw new RuntimeException(e);
         }
         return giftCertificateList;
@@ -264,7 +253,7 @@ public class GiftRepoImpl implements GiftRepository {
 
 
         } catch (SQLException e) {
-            log.error("Error in method update with gift_id = {} ",gift.getId());
+
             throw new RuntimeException(e);
         }
         return gift;
@@ -281,7 +270,7 @@ public class GiftRepoImpl implements GiftRepository {
             statement.close();
 
         } catch (Exception e) {
-            log.error("Error in method delete with gift_id = {} ",id);
+
             throw new RuntimeException(e);
         }
 
@@ -308,7 +297,7 @@ public class GiftRepoImpl implements GiftRepository {
             return tags;
 
         } catch (SQLException e) {
-            log.error("Error in method findByGiftId  gift_id = {} ",id);
+
             throw new RuntimeException(e);
         }
     }

@@ -1,9 +1,9 @@
 package com.epam.esm.service.implementation;
 
-import com.epam.esm.model.service.impl.TagServiceImp;
+import com.epam.esm.model.service.impl.TagServiceImpl;
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.dao.builders.TagBuilder;
-import com.epam.esm.model.dto.TagDto;
+import com.epam.esm.model.dto.TagDTO;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagDtoException;
@@ -22,7 +22,7 @@ class TagServiceImpTest {
 
     private final TagRepository tagRepository = mock(TagRepository.class);
 
-    private final TagService tagService = new TagServiceImp(tagRepository);
+    private final TagService tagService = new TagServiceImpl(tagRepository);
 
     private Long ID = 1L;
 
@@ -31,12 +31,12 @@ class TagServiceImpTest {
 
     private Tag TAG;
 
-    private TagDto TAG_DTO;
+    private TagDTO TAG_DTO;
 
     @BeforeEach
    void setUp(){
 
-        TAG_DTO = new TagDto(NAME);
+        TAG_DTO = new TagDTO(NAME);
 
         TAG = TagBuilder.builder().id(ID).name(NAME).build();
 

@@ -3,7 +3,7 @@ package com.epam.esm.model.service.impl;
 import com.epam.esm.persistance.dao.GiftRepository;
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.dao.builders.GiftBuilder;
-import com.epam.esm.model.dto.GiftDto;
+import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.model.exception.GiftNameIsReservedException;
@@ -40,7 +40,7 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    public GiftCertificate create(GiftDto giftDto) throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException {
+    public GiftCertificate create(GiftDTO giftDto) throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException {
 
         GiftValidator.checkGiftDto(giftDto);
 
@@ -99,7 +99,7 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    public GiftCertificate update(Long id, GiftDto giftDto) {
+    public GiftCertificate update(Long id, GiftDTO giftDto) {
 
         log.info("Gift '{}' will be update",giftDto.getName());
 
@@ -115,7 +115,7 @@ public class GiftServiceImpl implements GiftService {
                 .build());
     }
 
-    private boolean checkGiftName(GiftDto giftDto) {
+    private boolean checkGiftName(GiftDTO giftDto) {
 
         return giftRepository.existsByName(giftDto.getName());
     }
