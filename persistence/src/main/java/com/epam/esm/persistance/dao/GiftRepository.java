@@ -4,12 +4,13 @@ package com.epam.esm.persistance.dao;
 import com.epam.esm.persistance.entity.GiftCertificate;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GiftRepository {
 
     GiftCertificate save (GiftCertificate giftCertificate);
 
-    GiftCertificate findById(Long id);
+    Optional<GiftCertificate> findById(Long id);
 
     GiftCertificate findByName(String name);
 

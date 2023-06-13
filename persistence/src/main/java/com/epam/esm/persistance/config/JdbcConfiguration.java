@@ -13,6 +13,8 @@ import javax.sql.DataSource;
 @PropertySource("classpath:app.properties")
 public class JdbcConfiguration {
 
+
+
     @Bean
     DataSource dataSource(@Value("${user}") String user,
                           @Value("${password}") String password,

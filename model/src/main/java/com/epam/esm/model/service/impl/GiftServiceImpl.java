@@ -1,17 +1,18 @@
 package com.epam.esm.model.service.impl;
 
-import com.epam.esm.persistance.dao.GiftRepository;
-import com.epam.esm.persistance.dao.TagRepository;
-import com.epam.esm.persistance.dao.builders.GiftBuilder;
 import com.epam.esm.model.dto.GiftDTO;
-import com.epam.esm.persistance.entity.GiftCertificate;
-import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.model.exception.GiftNameIsReservedException;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagException;
+import com.epam.esm.model.exception.NoSuchGiftException;
+import com.epam.esm.model.service.GiftService;
 import com.epam.esm.model.utils.GiftValidator;
 import com.epam.esm.model.utils.TagValidator;
-import com.epam.esm.model.service.GiftService;
+import com.epam.esm.persistance.dao.GiftRepository;
+import com.epam.esm.persistance.dao.TagRepository;
+import com.epam.esm.persistance.dao.builders.GiftBuilder;
+import com.epam.esm.persistance.entity.GiftCertificate;
+import com.epam.esm.persistance.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class GiftServiceImpl implements GiftService {
@@ -44,13 +46,13 @@ public class GiftServiceImpl implements GiftService {
 
         GiftValidator.checkGiftDto(giftDto);
 
-       if (checkGiftName(giftDto)) {
-           throw new GiftNameIsReservedException();
-       }
+        if (checkGiftName(giftDto)) {
+            throw new GiftNameIsReservedException();
+        }
 
         List<Tag> tags = checkNewTags(tagRepository.getAll(), giftDto.getTags());
 
-        log.info("Gift '{}' will be create",giftDto.getName());
+        log.info("Gift '{}' will be create", giftDto.getName());
 
         return giftRepository.save(GiftBuilder.builder()
                 .name(giftDto.getName())
@@ -63,17 +65,26 @@ public class GiftServiceImpl implements GiftService {
                 .build());
     }
 
-    public List<GiftCertificate> getAll() {
+    public List<GiftDTO> getAll() {
 
-        return giftRepository.findAll();
+        return giftRepository.findAll()
+                .stream()
+                .map(giftCertificate -> new GiftDTO(
+                        giftCertificate.getId(),
+                        giftCertificate.getName(),
+                        giftCertificate.getDescription(),
+                        giftCertificate.getPrice(),
+                        giftCertificate.getDuration(),
+                        giftCertificate.getTags()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<GiftCertificate> getAllByTag(String tag) {
 
-        log.info("Find by tag {}",tag);
+        log.info("Find by tag {}", tag);
 
-       Long tagId = tagRepository.findByName(tag).getId();
+        Long tagId = tagRepository.findByName(tag).getId();
 
         return giftRepository.findAllByTag(tagId);
     }
@@ -84,15 +95,20 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    public GiftCertificate get(Long id) {
-
-        return giftRepository.findById(id);
+    public GiftDTO get(Long id) throws NoSuchGiftException {
+        var gift = giftRepository.findById(id).orElseThrow(() -> new NoSuchGiftException(id));
+        return new GiftDTO(gift.getId(),
+                gift.getName(),
+                gift.getDescription(),
+                gift.getPrice(),
+                gift.getDuration(),
+                gift.getTags());
     }
 
     @Override
     public Long deleteById(Long id) {
 
-        log.info("Gift id = '{}' will be delete",id);
+        log.info("Gift id = '{}' will be delete", id);
         giftRepository.delete(id);
 
         return id;
@@ -101,7 +117,7 @@ public class GiftServiceImpl implements GiftService {
     @Override
     public GiftCertificate update(Long id, GiftDTO giftDto) {
 
-        log.info("Gift '{}' will be update",giftDto.getName());
+        log.info("Gift '{}' will be update", giftDto.getName());
 
         return giftRepository.update(GiftBuilder.builder()
                 .id(id)
@@ -120,7 +136,7 @@ public class GiftServiceImpl implements GiftService {
         return giftRepository.existsByName(giftDto.getName());
     }
 
-    private List<Tag> checkNewTags(List<Tag> allTags, List<Tag> newTags) throws  InvalidTagException {
+    private List<Tag> checkNewTags(List<Tag> allTags, List<Tag> newTags) throws InvalidTagException {
         List<Tag> tagList = new ArrayList<>();
         for (Tag newTag : newTags) {
             boolean isExist = false;

@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -85,9 +86,9 @@ public class GiftRepositoryImpl implements GiftRepository {
     }
 
     @Override
-    public GiftCertificate findById(Long id) {
+    public Optional<GiftCertificate> findById(Long id) {
 
-        GiftCertificate giftCertificate = new GiftCertificate();
+        GiftCertificate giftCertificate = null;
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM gifts WHERE id =?");
             statement.setLong(1, id);
@@ -97,7 +98,7 @@ public class GiftRepositoryImpl implements GiftRepository {
             }
             statement.close();
 
-            return giftCertificate;
+            return Optional.ofNullable(giftCertificate);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -143,7 +144,7 @@ public class GiftRepositoryImpl implements GiftRepository {
 
             return existsByName;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
 
             throw new RuntimeException(e);
         }

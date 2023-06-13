@@ -23,6 +23,8 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <hateoas.version>2.6.4</hateoas.version>
+        <HikariCP.version>5.0.1</HikariCP.version>
     </properties>
     <dependencies>
         <dependency>
@@ -36,6 +38,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+            <version>${hateoas.version}</version>
         </dependency>
 
         <dependency>
@@ -62,7 +70,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.0.1</version>
+            <version>${hikaricp.version}</version>
         </dependency>
 
     </dependencies>

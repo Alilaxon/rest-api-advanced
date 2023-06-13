@@ -1,5 +1,6 @@
 package com.epam.esm.service.implementation;
 
+import com.epam.esm.model.exception.NoSuchGiftException;
 import com.epam.esm.model.service.impl.GiftServiceImpl;
 import com.epam.esm.persistance.dao.GiftRepository;
 import com.epam.esm.persistance.dao.TagRepository;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -121,8 +123,8 @@ class GiftCertificateServiceTest {
     }
 
     @Test
-    void get() {
-        when(giftRepository.findById(ID)).thenReturn(GIFT);
+    void get() throws NoSuchGiftException {
+        when(giftRepository.findById(ID)).thenReturn(Optional.ofNullable(GIFT));
         assertEquals(giftCertificateService.get(ID),GIFT);
     }
 

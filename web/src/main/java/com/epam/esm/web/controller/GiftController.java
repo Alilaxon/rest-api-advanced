@@ -1,23 +1,31 @@
 package com.epam.esm.web.controller;
 import com.epam.esm.model.dto.GiftDTO;
+import com.epam.esm.model.exception.NoSuchGiftException;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.model.exception.GiftNameIsReservedException;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagException;
 import com.epam.esm.model.service.GiftService;
 import com.epam.esm.model.service.impl.GiftServiceImpl;
+import com.epam.esm.web.utils.Linker;
 import com.epam.esm.web.utils.Sorter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/gift")
+@RequestMapping( "/gift")
 public class GiftController {
 
     private static final Logger log = LogManager.getLogger(GiftController.class);
@@ -31,11 +39,11 @@ public class GiftController {
     }
 
     @GetMapping("/get-all")
-    public List<GiftCertificate> getAll() {
+    public List<GiftDTO> getAll() {
 
-        log.info("gel_all");
+        log.info("get_all");
 
-        return giftCertificateService.getAll();
+        return Linker.addLink(giftCertificateService.getAll());
 
     }
 
@@ -43,13 +51,12 @@ public class GiftController {
     public List<GiftCertificate> getAllByTag
             (@RequestParam("tag") String tag ,
              @RequestParam("order") String order){
-        log.info("get all by tag = {}",tag);
 
+        log.info("get all by tag = {}",tag);
         if (order.equals("desc")){
             log.info("sort all by desc");
            return Sorter.sorting(giftCertificateService.getAllByTag(tag));
         }
-
         log.info("sort all by asc");
         return giftCertificateService.getAllByTag(tag);
     }
@@ -79,11 +86,16 @@ public class GiftController {
     }
     @GetMapping("/read/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GiftCertificate getById (@PathVariable("id") Long id){
+    public GiftDTO getById (@PathVariable("id") Long id) throws NoSuchGiftException {
 
         log.info("Get Gift by id = '{}'",id);
 
-        return giftCertificateService.get(id);
+        GiftDTO giftDTO = giftCertificateService.get(id);
+
+        Link selfLink = linkTo(methodOn(GiftController.class).getById(
+                giftDTO.getId())).withSelfRel();
+
+        return giftDTO.add(selfLink);
     }
 
     @PatchMapping("/update/{id}")

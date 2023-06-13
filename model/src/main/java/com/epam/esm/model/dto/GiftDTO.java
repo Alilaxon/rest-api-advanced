@@ -1,11 +1,12 @@
 package com.epam.esm.model.dto;
 
 import com.epam.esm.persistance.entity.Tag;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.beans.ConstructorProperties;
 import java.util.List;
 
-public class GiftDTO {
+public class GiftDTO extends RepresentationModel<GiftDTO> {
 
 
     private Long id;
@@ -25,6 +26,15 @@ public class GiftDTO {
     }
     @ConstructorProperties({"name", "description","price","duration","tags"})
     public GiftDTO(String name, String description, Long price, Long duration, List<Tag> tags) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.duration = duration;
+        this.tags = tags;
+    }
+
+    public GiftDTO(Long id, String name, String description, Long price, Long duration, List<Tag> tags) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
