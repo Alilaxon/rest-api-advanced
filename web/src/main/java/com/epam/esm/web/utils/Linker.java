@@ -11,7 +11,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 public class Linker {
-    public static List<GiftDTO> addLink (List<GiftDTO> list){
+    public static List<GiftDTO> addLinkToGiftDTO(List<GiftDTO> list){
 
         return list.stream().map(giftDTO -> {
             try {

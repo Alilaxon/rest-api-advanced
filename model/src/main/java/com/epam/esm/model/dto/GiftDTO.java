@@ -5,6 +5,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.beans.ConstructorProperties;
 import java.util.List;
+import java.util.Objects;
 
 public class GiftDTO extends RepresentationModel<GiftDTO> {
 
@@ -88,6 +89,20 @@ public class GiftDTO extends RepresentationModel<GiftDTO> {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GiftDTO)) return false;
+        if (!super.equals(o)) return false;
+        GiftDTO giftDTO = (GiftDTO) o;
+        return Objects.equals(name, giftDTO.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name);
     }
 
     @Override

@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +30,12 @@ class GiftCertificateServiceTest {
 
     private final TagRepository tagRepository = mock(TagRepository.class);
 
+    private final DateTimeFormatter FORMATTER =new DateTimeFormatterBuilder()
+                .appendPattern("M-d-yyyy[ h:mm:ss]")
+                .toFormatter();;
+
     private final GiftServiceImpl giftCertificateService
-            = new GiftServiceImpl(giftRepository,tagRepository);
+            = new GiftServiceImpl(giftRepository,tagRepository,FORMATTER);
 
     private  GiftCertificate GIFT;
 

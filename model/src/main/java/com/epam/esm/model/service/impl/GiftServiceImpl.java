@@ -34,11 +34,16 @@ public class GiftServiceImpl implements GiftService {
 
     private final TagRepository tagRepository;
 
-    @Autowired
-    public GiftServiceImpl(GiftRepository giftRepository, TagRepository tagRepository) {
+    private final DateTimeFormatter FORMATTER;
 
+
+    @Autowired
+    public GiftServiceImpl(GiftRepository giftRepository,
+                           TagRepository tagRepository,
+                           DateTimeFormatter FORMATTER) {
         this.giftRepository = giftRepository;
         this.tagRepository = tagRepository;
+        this.FORMATTER = FORMATTER;
     }
 
     @Override
@@ -59,8 +64,8 @@ public class GiftServiceImpl implements GiftService {
                 .description(giftDto.getDescription())
                 .price(giftDto.getPrice())
                 .duration(giftDto.getDuration())
-                .createDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE))
-                .lastUpdateDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE))
+                .createDate(LocalDateTime.now().format(FORMATTER))
+                .lastUpdateDate(LocalDateTime.now().format(FORMATTER))
                 .tags(tags)
                 .build());
     }

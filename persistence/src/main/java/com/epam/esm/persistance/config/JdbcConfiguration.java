@@ -27,7 +27,6 @@ public class JdbcConfiguration {
         config.setJdbcUrl(connectionUrl);
         config.setUsername(user);
         config.setPassword(password);
-
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

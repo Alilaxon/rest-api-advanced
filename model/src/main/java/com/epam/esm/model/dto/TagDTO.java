@@ -11,7 +11,8 @@ public class TagDTO {
 
     public TagDTO() {
     }
-@ConstructorProperties("name")
+
+    @ConstructorProperties("name")
     public TagDTO(String name) {
         this.name = name;
     }
