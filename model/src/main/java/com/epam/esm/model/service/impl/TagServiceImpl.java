@@ -64,6 +64,11 @@ public class TagServiceImpl implements TagService {
         return tagRepository.Delete(id);
     }
 
+    @Override
+    public Tag GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders() {
+        return tagRepository.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders().get();
+    }
+
     private boolean checkTagName(TagDTO tagDto) {
 
         return tagRepository.existsByName(tagDto.getName());

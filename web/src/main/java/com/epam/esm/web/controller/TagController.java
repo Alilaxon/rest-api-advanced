@@ -67,4 +67,9 @@ public class TagController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/popularTag")
+    public Tag MostPoplarTag(){
+        return tagService.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
+    }
 }

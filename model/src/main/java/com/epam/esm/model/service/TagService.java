@@ -21,6 +21,8 @@ public interface TagService {
 
     Long deleteById(Long id);
 
+    Tag GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
+
 
 
 
