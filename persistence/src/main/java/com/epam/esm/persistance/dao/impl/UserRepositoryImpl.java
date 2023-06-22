@@ -1,10 +1,7 @@
 package com.epam.esm.persistance.dao.impl;
 
-import com.epam.esm.persistance.dao.DefaultRepository;
 import com.epam.esm.persistance.dao.UserRepository;
-import com.epam.esm.persistance.dao.mapper.TagMapper;
 import com.epam.esm.persistance.dao.mapper.UserMapper;
-import com.epam.esm.persistance.entity.Tag;
 import com.epam.esm.persistance.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -58,15 +55,12 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-
                 users.add(UserMapper.extractUser(resultSet));
             }
-
             statement.close();
 
         } catch (SQLException e) {
@@ -77,8 +71,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(User user) {
-
-        //TODO
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO users (user_name, password, email) VALUES(?,?,?)");
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getEmail());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -86,9 +89,22 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void delete(User user) {
         try (Connection connection = dataSource.getConnection()) {
-
             PreparedStatement statement = connection.prepareStatement("DELETE FROM gifts WHERE id =?");
             statement.setLong(1, user.getId());
+            statement.execute();
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void DeleteByPartOfName(String name) {
+        String partOfName = String.valueOf(new StringBuilder().append("%").append(name).append("%"));
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection
+                    .prepareStatement("DELETE FROM users WHERE user_name LIKE ?");
+            statement.setString(1, partOfName);
             statement.execute();
             statement.close();
 
@@ -96,6 +112,5 @@ public class UserRepositoryImpl implements UserRepository {
 
             throw new RuntimeException(e);
         }
-
     }
 }

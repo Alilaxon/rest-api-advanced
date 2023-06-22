@@ -16,6 +16,14 @@ public class UserDTO {
     public UserDTO() {
     }
 
+    public UserDTO(Long id, String userName,
+                   String email, String password) {
+        this.id = id;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
+
     @ConstructorProperties({"name", "email", "password"})
     public UserDTO(String userName, String email, String password) {
         this.userName = userName;

@@ -10,9 +10,13 @@ public interface UserService {
 
     User create (UserDTO userDTO) ;
 
-    User getById(Long id);
+    UserDTO getById(Long id);
 
-    List<User> getAll();
+    List<UserDTO> getAll();
 
     Long deleteById(Long id);
+
+    public void fillDataBase();
+
+    public void cleanDataBase();
 }

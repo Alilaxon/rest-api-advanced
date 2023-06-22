@@ -57,10 +57,10 @@ CREATE TABLE users
 
 );
 INSERT INTO users
-VALUES (DEFAULT,'user','123456','user@gmail.com');
+VALUES (DEFAULT,'Harry','123456','Harry@gmail.com');
 
 INSERT INTO users
-VALUES (DEFAULT,'user2','123456','user@gmail.com');
+VALUES (DEFAULT,'Dobby','123456','Dobby@gmail.com');
 
 INSERT INTO users
-VALUES (DEFAULT,'user3','123456','user@gmail.com');
+VALUES (DEFAULT,'Draco','123456','Draco@gmail.com');

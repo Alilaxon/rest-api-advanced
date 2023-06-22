@@ -1,7 +1,6 @@
 package com.epam.esm.web.controller;
 
-import com.epam.esm.model.service.HelloService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.epam.esm.model.service.impl.HelloService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

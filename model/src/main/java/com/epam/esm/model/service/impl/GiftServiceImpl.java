@@ -48,15 +48,11 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     public GiftCertificate create(GiftDTO giftDto) throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException {
-
         GiftValidator.checkGiftDto(giftDto);
-
         if (checkGiftName(giftDto)) {
             throw new GiftNameIsReservedException();
         }
-
         List<Tag> tags = checkNewTags(tagRepository.getAll(), giftDto.getTags());
-
         log.info("Gift '{}' will be create", giftDto.getName());
 
         return giftRepository.save(GiftBuilder.builder()
@@ -86,9 +82,7 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     public List<GiftCertificate> getAllByTag(String tag) {
-
         log.info("Find by tag {}", tag);
-
         Long tagId = tagRepository.findByName(tag).getId();
 
         return giftRepository.findAllByTag(tagId);
@@ -96,12 +90,14 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     public List<GiftCertificate> getAllByDescription(String description) {
+
         return giftRepository.findAllByPartOfDescription(description);
     }
 
     @Override
     public GiftDTO get(Long id) throws NoSuchGiftException {
         var gift = giftRepository.findById(id).orElseThrow(() -> new NoSuchGiftException(id));
+
         return new GiftDTO(gift.getId(),
                 gift.getName(),
                 gift.getDescription(),
@@ -112,7 +108,6 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     public Long deleteById(Long id) {
-
         log.info("Gift id = '{}' will be delete", id);
         giftRepository.delete(id);
 
@@ -121,7 +116,6 @@ public class GiftServiceImpl implements GiftService {
 
     @Override
     public GiftCertificate update(Long id, GiftDTO giftDto) {
-
         log.info("Gift '{}' will be update", giftDto.getName());
 
         return giftRepository.update(GiftBuilder.builder()

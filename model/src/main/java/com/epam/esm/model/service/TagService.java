@@ -23,6 +23,8 @@ public interface TagService {
 
     Tag GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
 
+    public void fillDataBase();
+
 
 
 

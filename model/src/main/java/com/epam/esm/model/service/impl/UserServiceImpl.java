@@ -9,11 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -34,13 +35,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(Long id) {
-        return userRepository.get(id).get();
+    public UserDTO getById(Long id) {
+        User user = userRepository.get(id).get();
+        return new UserDTO(user.getId(),
+                user.getUserName(),
+                user.getEmail(), 
+                user.getPassword());
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.getAll();
+    public List<UserDTO> getAll() {
+        return userRepository.getAll().stream()
+                .map(user -> new UserDTO(
+                        user.getId(),
+                        user.getUserName(),
+                        user.getEmail(),
+                        user.getPassword()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -48,4 +59,21 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(userRepository.get(id).get());
         return id;
     }
+    @Override
+    public void fillDataBase(){
+        for (int i = 0; i < 1000; i++) {
+            String name = String.valueOf(new StringBuilder().append("User").append(i));
+            String email = String.valueOf(new StringBuilder().append("email").append(i).append("@gmail.com"));
+            String password =  String.valueOf(new StringBuilder().append("12345678").append(i));
+           userRepository.save(UserBuilder.builder()
+                   .userName(name)
+                   .password(password)
+                   .email(email).build());
+        }
+    }
+    @Override
+    public void cleanDataBase(){
+        userRepository.DeleteByPartOfName("ser");
+    };
+        
 }

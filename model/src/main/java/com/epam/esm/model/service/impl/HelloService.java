@@ -1,4 +1,4 @@
-package com.epam.esm.model.service;
+package com.epam.esm.model.service.impl;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;

@@ -70,6 +70,14 @@ public class TagController {
 
     @GetMapping("/popularTag")
     public Tag MostPoplarTag(){
+
         return tagService.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
     }
+
+    public Integer FillDataBase(){
+        tagService.fillDataBase();
+
+        return tagService.getAll().size();
+    }
+
 }

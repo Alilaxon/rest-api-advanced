@@ -6,4 +6,7 @@ import com.epam.esm.persistance.entity.User;
 public interface UserRepository extends DefaultRepository<User> {
 
 
+    void DeleteByPartOfName(String name);
+
+
 }
