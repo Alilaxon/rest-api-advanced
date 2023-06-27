@@ -16,7 +16,9 @@ public interface TagRepository {
 
     Tag findById(Long id);
 
-    Long Delete (Long id);
+    Long delete(Long id);
+
+    void deleteByPartOfName(String part);
 
     boolean existsByName (String name);
 

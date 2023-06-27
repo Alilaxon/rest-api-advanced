@@ -63,7 +63,7 @@ class TagRepositoryImplTest {
         Tag TestTag = TagBuilder.builder().name("Orange").build();
         Long id = tagDao.save(TestTag).getId();
         assertNotNull(tagDao.findById(id));
-        tagDao.Delete(id);
+        tagDao.delete(id);
         assertNull(tagDao.findById(id));
     }
 

@@ -4,6 +4,7 @@ import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.mapper.UserMapper;
 import com.epam.esm.persistance.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Primary
 public class UserRepositoryImpl implements UserRepository {
 
     private final DataSource dataSource;
@@ -99,7 +101,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void DeleteByPartOfName(String name) {
+    public void deleteByPartOfName(String name) {
         String partOfName = String.valueOf(new StringBuilder().append("%").append(name).append("%"));
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection

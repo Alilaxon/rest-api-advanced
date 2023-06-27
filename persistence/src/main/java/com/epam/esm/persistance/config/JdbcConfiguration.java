@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 
@@ -14,9 +16,8 @@ import javax.sql.DataSource;
 public class JdbcConfiguration {
 
 
-
     @Bean
-    DataSource dataSource(@Value("${user}") String user,
+   public DataSource dataSource(@Value("${user}") String user,
                           @Value("${password}") String password,
                           @Value("${driver}") String className,
                           @Value("${url}") String connectionUrl

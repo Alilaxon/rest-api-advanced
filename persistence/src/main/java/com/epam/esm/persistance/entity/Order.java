@@ -4,7 +4,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 public class Order {
-    @Id
+
     private Long id;
 
     private Long giftId;

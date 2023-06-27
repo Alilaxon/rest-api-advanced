@@ -48,15 +48,16 @@ public class GiftController {
     @GetMapping("/getAllByTag")
     public List<GiftCertificate> getAllByTag
             (@RequestParam("tag") String tag ,
-             @RequestParam("order") String order){
+             @RequestParam("order") String order,
+            @RequestParam(name = "page",required = false, defaultValue = "1")Long page){
 
         log.info("get all by tag = {}",tag);
         if (order.equals("desc")){
             log.info("sort all by desc");
-           return Sorter.sorting(giftCertificateService.getAllByTag(tag));
+           return Sorter.sorting(giftCertificateService.getAllByTag(tag,page));
         }
         log.info("sort all by asc");
-        return giftCertificateService.getAllByTag(tag);
+        return giftCertificateService.getAllByTag(tag,page);
     }
     @GetMapping("/getAllByDescription")
     public List<GiftCertificate> getAllByDescription (

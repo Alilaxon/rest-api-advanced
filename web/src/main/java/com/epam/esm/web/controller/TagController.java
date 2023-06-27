@@ -73,10 +73,15 @@ public class TagController {
 
         return tagService.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
     }
+    @GetMapping("/fillDataBase")
+    public Integer fillDataBase(){
+        tagService.fillTable();
 
-    public Integer FillDataBase(){
-        tagService.fillDataBase();
-
+        return tagService.getAll().size();
+    }
+    @GetMapping("/cleanDataBase")
+    public Integer cleanDataBase(){
+        tagService.cleanTable();
         return tagService.getAll().size();
     }
 

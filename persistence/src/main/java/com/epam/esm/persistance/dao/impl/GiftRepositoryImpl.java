@@ -178,7 +178,7 @@ public class GiftRepositoryImpl implements GiftRepository {
     }
 
     @Override
-    public List<GiftCertificate> findAllByTag(Long id) {
+    public List<GiftCertificate> findAllByTag(Long id ,Long page) {
 
         log.info("tag id = {}",id);
 
@@ -187,8 +187,11 @@ public class GiftRepositoryImpl implements GiftRepository {
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM  gifts JOIN gifts_tags gt on gifts.id = gt.gift_id WHERE tag_id = ? ORDER BY gift_name ASC ");
+                    "SELECT * FROM  gifts " +
+                            "JOIN gifts_tags gt on gifts.id = gt.gift_id WHERE tag_id = ? " +
+                            "ORDER BY gift_name ASC LIMIT 50 OFFSET ?");
             statement.setLong(1, id);
+            statement.setLong(2,page);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

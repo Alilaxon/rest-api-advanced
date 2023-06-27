@@ -76,7 +76,7 @@ class GiftRepositoryImplTest {
     @Test
     void findAllByTag() {
         // tag{id = 1 , name = "red"}
-        assertEquals(giftDao.findAllByTag(tag.getId()).get(0).getTags().get(0).getId(), tag.getId());
+        assertEquals(giftDao.findAllByTag(tag.getId(),1L).get(0).getTags().get(0).getId(), tag.getId());
     }
 
     @Test

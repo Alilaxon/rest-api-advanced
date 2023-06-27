@@ -122,7 +122,7 @@ public class TagRepositoryImpl implements TagRepository {
 
 
     @Override
-    public Long Delete(Long id) {
+    public Long delete(Long id) {
 
         try (Connection connection = dataSource.getConnection()) {
 
@@ -136,6 +136,22 @@ public class TagRepositoryImpl implements TagRepository {
             throw new RuntimeException(e);
         }
      return id;
+    }
+
+    @Override
+    public void deleteByPartOfName(String part) {
+        String partOfName = String.valueOf(new StringBuilder().append("%").append(part).append("%"));
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection
+                    .prepareStatement("DELETE FROM tags WHERE tags.tag_name LIKE ?");
+            statement.setString(1, partOfName);
+            statement.execute();
+            statement.close();
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

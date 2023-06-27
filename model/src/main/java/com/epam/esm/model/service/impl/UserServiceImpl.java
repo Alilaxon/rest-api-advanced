@@ -60,11 +60,11 @@ public class UserServiceImpl implements UserService {
         return id;
     }
     @Override
-    public void fillDataBase(){
+    public void fillTable(){
         for (int i = 0; i < 1000; i++) {
-            String name = String.valueOf(new StringBuilder().append("User").append(i));
-            String email = String.valueOf(new StringBuilder().append("email").append(i).append("@gmail.com"));
-            String password =  String.valueOf(new StringBuilder().append("12345678").append(i));
+            String name = "User" + i;
+            String email = "email" + i + "@gmail.com";
+            String password = "12345678" + i;
            userRepository.save(UserBuilder.builder()
                    .userName(name)
                    .password(password)
@@ -72,8 +72,8 @@ public class UserServiceImpl implements UserService {
         }
     }
     @Override
-    public void cleanDataBase(){
-        userRepository.DeleteByPartOfName("ser");
-    };
+    public void cleanTable(){
+        userRepository.deleteByPartOfName("ser");
+    }
         
 }

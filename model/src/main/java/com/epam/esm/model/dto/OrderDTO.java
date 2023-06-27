@@ -17,14 +17,15 @@ public class OrderDTO {
 
     public OrderDTO() {
     }
-@ConstructorProperties({"giftId","userId","price"})
-    public OrderDTO(Long giftId, Long userId, Long price) {
+@ConstructorProperties({"giftId","userId"})
+    public OrderDTO(Long giftId, Long userId) {
         this.giftId = giftId;
         this.userId = userId;
-        this.price = price;
+
     }
 
-    public OrderDTO(Long id, Long giftId, Long userId, Long price,String timestamp) {
+    public OrderDTO(Long id, Long giftId, Long userId,
+                    Long price,String timestamp) {
         this.id = id;
         this.giftId = giftId;
         this.userId = userId;

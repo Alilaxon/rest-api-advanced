@@ -4,8 +4,10 @@ import com.epam.esm.persistance.dao.OrderRepository;
 import com.epam.esm.persistance.dao.mapper.Columns;
 import com.epam.esm.persistance.dao.mapper.GiftMapper;
 import com.epam.esm.persistance.dao.mapper.OrderMapper;
+import com.epam.esm.persistance.dao.mapper.TagMapper;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Order;
+import com.epam.esm.persistance.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +40,19 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public List<Order> getAll() {
+        List<Order> orderList = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                orderList.add(OrderMapper.extractOrder(resultSet));
+            }
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return orderList;
 
-        return null;
     }
 
     @Override

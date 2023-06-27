@@ -9,7 +9,7 @@ import com.epam.esm.model.exception.TagNameIsReservedException;
 
 import java.util.List;
 
-public interface TagService {
+public interface TagService extends TableFiller {
 
 
 
@@ -23,7 +23,7 @@ public interface TagService {
 
     Tag GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
 
-    public void fillDataBase();
+
 
 
 

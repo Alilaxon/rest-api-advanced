@@ -69,8 +69,8 @@ class TagServiceImpTest {
 
     @Test
     void deleteById() {
-        when(tagRepository.Delete(ID)).thenReturn(ID);
+        when(tagRepository.delete(ID)).thenReturn(ID);
         tagService.deleteById(ID);
-        verify(tagRepository,times(1)).Delete(ID);
+        verify(tagRepository,times(1)).delete(ID);
     }
 }

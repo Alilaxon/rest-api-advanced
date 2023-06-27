@@ -16,7 +16,7 @@ public interface GiftService {
 
     List<GiftDTO> getAll();
 
-    List<GiftCertificate> getAllByTag(String tag);
+    List<GiftCertificate> getAllByTag(String tag ,Long page);
 
     List<GiftCertificate> getAllByDescription(String description);
 

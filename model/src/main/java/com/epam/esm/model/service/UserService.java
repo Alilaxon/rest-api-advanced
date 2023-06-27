@@ -6,7 +6,7 @@ import com.epam.esm.persistance.entity.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends TableFiller {
 
     User create (UserDTO userDTO) ;
 
@@ -16,7 +16,4 @@ public interface UserService {
 
     Long deleteById(Long id);
 
-    public void fillDataBase();
-
-    public void cleanDataBase();
 }

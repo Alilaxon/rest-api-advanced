@@ -36,7 +36,7 @@ public class TagServiceImpl implements TagService {
             InvalidTagDtoException {
         TagValidator.checkTagDto(tagDto);
         if (checkTagName(tagDto)) {
-            throw new TagNameIsReservedException();
+            throw new TagNameIsReservedException(tagDto.getName());
         }
         log.info("Tag '{}' will be create", tagDto.getName());
         return tagRepository.save(TagBuilder.builder().name(tagDto.getName()).build());
@@ -57,7 +57,7 @@ public class TagServiceImpl implements TagService {
     public Long deleteById(Long id) {
         log.info("Tag id= '{}' will be create", id);
 
-        return tagRepository.Delete(id);
+        return tagRepository.delete(id);
     }
 
     @Override
@@ -69,11 +69,15 @@ public class TagServiceImpl implements TagService {
 
         return tagRepository.existsByName(tagDto.getName());
     }
-
-    public void fillDataBase() {
+    @Override
+    public void fillTable() {
         for (int i = 0; i < 1000; i++) {
-            String name = String.valueOf(new StringBuilder().append("Tag").append(i));
+            String name = "TestTag" + i;
             tagRepository.save(TagBuilder.builder().name(name).build());
         }
+    }
+    @Override
+    public void cleanTable(){
+        tagRepository.deleteByPartOfName("estTag");
     }
 }

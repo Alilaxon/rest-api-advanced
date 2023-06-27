@@ -17,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -34,23 +33,23 @@ public class GiftServiceImpl implements GiftService {
 
     private final TagRepository tagRepository;
 
-    private final DateTimeFormatter FORMATTER;
+    private final DateTimeFormatter dateTimeFormatter;
 
 
     @Autowired
     public GiftServiceImpl(GiftRepository giftRepository,
                            TagRepository tagRepository,
-                           DateTimeFormatter FORMATTER) {
+                           DateTimeFormatter dateTimeFormatter) {
         this.giftRepository = giftRepository;
         this.tagRepository = tagRepository;
-        this.FORMATTER = FORMATTER;
+        this.dateTimeFormatter = dateTimeFormatter;
     }
 
     @Override
     public GiftCertificate create(GiftDTO giftDto) throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException {
         GiftValidator.checkGiftDto(giftDto);
         if (checkGiftName(giftDto)) {
-            throw new GiftNameIsReservedException();
+            throw new GiftNameIsReservedException(giftDto.getName());
         }
         List<Tag> tags = checkNewTags(tagRepository.getAll(), giftDto.getTags());
         log.info("Gift '{}' will be create", giftDto.getName());
@@ -60,8 +59,8 @@ public class GiftServiceImpl implements GiftService {
                 .description(giftDto.getDescription())
                 .price(giftDto.getPrice())
                 .duration(giftDto.getDuration())
-                .createDate(LocalDateTime.now().format(FORMATTER))
-                .lastUpdateDate(LocalDateTime.now().format(FORMATTER))
+                .createDate(LocalDateTime.now().format(dateTimeFormatter))
+                .lastUpdateDate(LocalDateTime.now().format(dateTimeFormatter))
                 .tags(tags)
                 .build());
     }
@@ -81,11 +80,13 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    public List<GiftCertificate> getAllByTag(String tag) {
+    public List<GiftCertificate> getAllByTag(String tag,Long page) {
         log.info("Find by tag {}", tag);
         Long tagId = tagRepository.findByName(tag).getId();
 
-        return giftRepository.findAllByTag(tagId);
+        Integer limit = 50;
+        Long offset = limit*(page -1);
+        return giftRepository.findAllByTag(tagId,offset);
     }
 
     @Override
