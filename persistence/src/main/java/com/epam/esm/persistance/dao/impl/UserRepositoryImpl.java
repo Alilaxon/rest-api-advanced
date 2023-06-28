@@ -30,16 +30,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> get(long id) {
-
         try (Connection connection = dataSource.getConnection()) {
-
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM users WHERE id=?");
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             User user = null;
-
             while (resultSet.next()) {
-
                 user = UserMapper.extractUser(resultSet);
             }
             statement.close();
@@ -47,24 +44,21 @@ public class UserRepositoryImpl implements UserRepository {
             return Optional.ofNullable(user);
 
         } catch (SQLException e) {
-
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 users.add(UserMapper.extractUser(resultSet));
             }
             statement.close();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -84,14 +78,14 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 
     @Override
     public void delete(User user) {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM gifts WHERE id =?");
+            PreparedStatement statement =
+                    connection.prepareStatement("DELETE FROM gifts WHERE id =?");
             statement.setLong(1, user.getId());
             statement.execute();
             statement.close();
@@ -102,16 +96,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteByPartOfName(String name) {
-        String partOfName = String.valueOf(new StringBuilder().append("%").append(name).append("%"));
+        String partOfName = "%" + name + "%";
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection
-                    .prepareStatement("DELETE FROM users WHERE user_name LIKE ?");
+            PreparedStatement statement =
+                    connection.prepareStatement("DELETE FROM users WHERE user_name LIKE ?");
             statement.setString(1, partOfName);
             statement.execute();
             statement.close();
-
         } catch (SQLException e) {
-
             throw new RuntimeException(e);
         }
     }

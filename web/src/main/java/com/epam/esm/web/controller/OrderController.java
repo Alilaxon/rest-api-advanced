@@ -19,22 +19,26 @@ public class OrderController {
 
     @Autowired
     public OrderController(OrderService orderService) {
+
         this.orderService = orderService;
     }
 
     @RequestMapping("/get-all")
-    public List<OrderDTO> getAllByUserId(@RequestParam("id") Long id  ) {
+    public List<OrderDTO> getAllByUserId(@RequestParam("id") Long id) {
 
         return orderService.getAllOrdersByUserId(id);
     }
+
     @RequestMapping("/create")
-    public ResponseEntity<Long> create (@RequestBody OrderDTO orderDTO) throws NoSuchUserException, NoSuchGiftException {
+    public ResponseEntity<Long> create(@RequestBody OrderDTO orderDTO)
+            throws NoSuchUserException, NoSuchGiftException {
         Long id = orderService.create(orderDTO).getId();
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
 
     }
+
     @GetMapping("/fillDataBase")
-    public Integer fillDataBase(){
+    public Integer fillDataBase() {
         orderService.fillTable();
         return orderService.getAll().size();
     }

@@ -1,7 +1,6 @@
 package com.epam.esm.web.controller;
 
 
-
 import com.epam.esm.model.dto.TagDTO;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagDtoException;
@@ -46,13 +45,9 @@ public class TagController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Long> create(@RequestBody TagDTO tagDto) throws TagNameIsReservedException, InvalidTagDtoException, InvalidGiftDtoException {
-
-        System.out.println("create");
-
-        log.info("Tag '{}' will be create",tagDto.getName());
-
-
+    public ResponseEntity<Long> create(@RequestBody TagDTO tagDto)
+            throws TagNameIsReservedException, InvalidTagDtoException, InvalidGiftDtoException {
+        log.info("Tag '{}' will be create", tagDto.getName());
         Long id = tagService.create(tagDto).getId();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
@@ -60,27 +55,27 @@ public class TagController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
-
-        log.info("Delete Tag by id = '{}'",id);
-
+        log.info("Delete Tag by id = '{}'", id);
         tagService.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/popularTag")
-    public Tag MostPoplarTag(){
+    public Tag MostPoplarTag() {
 
         return tagService.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
     }
+
     @GetMapping("/fillDataBase")
-    public Integer fillDataBase(){
+    public Integer fillDataBase() {
         tagService.fillTable();
 
         return tagService.getAll().size();
     }
+
     @GetMapping("/cleanDataBase")
-    public Integer cleanDataBase(){
+    public Integer cleanDataBase() {
         tagService.cleanTable();
         return tagService.getAll().size();
     }

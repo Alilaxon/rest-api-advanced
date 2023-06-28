@@ -17,10 +17,12 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService) {
+
         this.userService = userService;
     }
     @GetMapping
     public List<UserDTO> getAll(){
+
         return userService.getAll();
     }
     @GetMapping("/{id}")

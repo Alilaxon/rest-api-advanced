@@ -76,7 +76,8 @@ public class GiftController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Long> create(@RequestBody GiftDTO giftDto) throws GiftNameIsReservedException, InvalidTagException, InvalidGiftDtoException {
+    public ResponseEntity<Long> create(@RequestBody GiftDTO giftDto)
+            throws GiftNameIsReservedException, InvalidTagException, InvalidGiftDtoException {
 
         log.info("Gift '{}' will be create",giftDto.getName());
         Long id = giftCertificateService.create(giftDto).getId();
@@ -100,7 +101,6 @@ public class GiftController {
     @PatchMapping("/update/{id}")
     public ResponseEntity<Long> create (@PathVariable("id") Long id,
                                         @RequestBody GiftDTO giftDto){
-
         log.info("Update Gift by id = '{}'",id);
         Long resultId = giftCertificateService.update(id,giftDto).getId();
 
@@ -109,7 +109,6 @@ public class GiftController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> delete (@PathVariable Long id){
-
         log.info("Delete Gift by id = '{}'",id);
         giftCertificateService.deleteById(id);
 

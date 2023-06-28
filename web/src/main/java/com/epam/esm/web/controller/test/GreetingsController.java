@@ -1,4 +1,4 @@
-package com.epam.esm.web.controller;
+package com.epam.esm.web.controller.test;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

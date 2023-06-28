@@ -172,7 +172,7 @@ public class GiftRepositoryImpl implements GiftRepository {
 
         } catch (SQLException e) {
 
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
         return giftCertificateList;
     }
