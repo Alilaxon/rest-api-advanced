@@ -1,10 +1,8 @@
 package com.epam.esm.persistance.entity;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
 @Table(schema = "tags")
 public class Tag {
     @Id

@@ -1,13 +1,14 @@
-package com.epam.esm.dto;
+package com.epam.esm.model.dto;
 
 
-import com.epam.esm.model.dto.TagDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-class TagDtoTest {
+class TagDTOTest {
 
     TagDTO tagDto;
 
@@ -26,5 +27,4 @@ class TagDtoTest {
         assertEquals(tagDto.getName(),NAME);
 
     }
-
 }

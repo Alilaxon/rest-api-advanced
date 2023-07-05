@@ -1,15 +1,22 @@
 package com.epam.esm.model.dto;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.beans.ConstructorProperties;
 import java.util.Objects;
 
-public class TagDTO {
+public class TagDTO extends RepresentationModel<TagDTO> {
 
     private Long id;
 
     private String name;
 
     public TagDTO() {
+    }
+
+    public TagDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     @ConstructorProperties("name")

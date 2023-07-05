@@ -1,4 +1,4 @@
-package com.epam.esm.persistance.implementation;
+package com.epam.esm.persistance.dao.impl;
 
 import com.epam.esm.persistance.config.EmbeddedJdbcConfig;
 import com.epam.esm.persistance.dao.impl.GiftRepositoryImpl;
@@ -68,7 +68,6 @@ class GiftRepositoryImplTest {
 
     @Test
     void existsByName() {
-
         assertTrue(giftDao.existsByName("giftN3"));
     }
 
@@ -83,27 +82,19 @@ class GiftRepositoryImplTest {
     void findAllByPartOfDescription() {
         assertEquals(giftDao.findAllByPartOfDescription("good").get(0).getDescription(), gift.getDescription());
     }
-
     @Test
     void save() {
         gift.setName("TestGift");
         assertEquals(giftDao.save(gift).getId(), 5L);
     }
-
     @Test
     void update() {
         gift.setName("NewGift");
         giftDao.update(gift);
         assertEquals(giftDao.findByName("NewGift").getId(), 1L);
-
     }
-
     @Test
     void delete() {
-//        giftDao.delete(4L);
-//        assertNull(giftDao.findById(4L).get());
-//        gift.setName("SuperGift");
-//        giftDao.save(gift);
     }
 
 }

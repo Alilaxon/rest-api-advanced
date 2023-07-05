@@ -1,4 +1,4 @@
-package com.epam.esm.persistance.implementation;
+package com.epam.esm.persistance.dao.impl;
 
 import com.epam.esm.persistance.config.EmbeddedJdbcConfig;
 import com.epam.esm.persistance.dao.builders.TagBuilder;

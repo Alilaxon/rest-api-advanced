@@ -46,7 +46,6 @@ CREATE TABLE orders
     gift_id       INT REFERENCES gifts (id) ON DELETE CASCADE,
     create_date   VARCHAR(64)      NOT NULL,
     PRIMARY KEY (id)
-
 );
 
 DROP TABLE orders;

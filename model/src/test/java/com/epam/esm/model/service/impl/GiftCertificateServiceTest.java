@@ -1,4 +1,4 @@
-package com.epam.esm.service.implementation;
+package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.exception.NoSuchGiftException;
 import com.epam.esm.model.service.impl.GiftServiceImpl;
@@ -120,18 +120,20 @@ class GiftCertificateServiceTest {
     @Test
     void getAll() {
         when(giftRepository.findAll()).thenReturn(List.of(GIFT));
-        assertEquals(giftCertificateService.getAll(),List.of(GIFT));
+        assertEquals(giftCertificateService.getAll(),List.of(GIFT_DTO));
     }
 
     @Test
     void getAllByTag() {
+
         when(giftRepository.findAllByTag(TAG_ONE.getId(),1L)).thenReturn(List.of(GIFT));
+        assertEquals(giftCertificateService.getAllByTag(TAG_ONE.getName(),1L),List.of(GIFT_DTO));
     }
 
     @Test
     void get() throws NoSuchGiftException {
         when(giftRepository.findById(ID)).thenReturn(Optional.ofNullable(GIFT));
-        assertEquals(giftCertificateService.get(ID),GIFT);
+        assertEquals(giftCertificateService.get(ID),GIFT_DTO);
     }
 
     @Test

@@ -73,6 +73,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public void cleanTable(){
+
         userRepository.deleteByPartOfName("ser");
     }
         

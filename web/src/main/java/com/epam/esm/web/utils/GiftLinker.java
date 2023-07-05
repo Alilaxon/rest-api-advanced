@@ -3,14 +3,12 @@ package com.epam.esm.web.utils;
 import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.model.exception.NoSuchGiftException;
 import com.epam.esm.web.controller.GiftController;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-public class Linker {
+public class GiftLinker {
     public static List<GiftDTO> addLinkToGiftDTO(List<GiftDTO> list){
 
         return list.stream().map(giftDTO -> {

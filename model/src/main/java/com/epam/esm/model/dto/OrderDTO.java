@@ -1,9 +1,11 @@
 package com.epam.esm.model.dto;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.beans.ConstructorProperties;
 import java.util.Objects;
 
-public class OrderDTO {
+public class OrderDTO extends RepresentationModel<OrderDTO> {
 
     private Long id;
 

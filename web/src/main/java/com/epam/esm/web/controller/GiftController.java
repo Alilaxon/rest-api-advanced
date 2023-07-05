@@ -7,7 +7,7 @@ import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagException;
 import com.epam.esm.model.service.GiftService;
 import com.epam.esm.model.service.impl.GiftServiceImpl;
-import com.epam.esm.web.utils.Linker;
+import com.epam.esm.web.utils.GiftLinker;
 import com.epam.esm.web.utils.Sorter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +41,7 @@ public class GiftController {
 
         log.info("get_all");
 
-        return Linker.addLinkToGiftDTO(giftCertificateService.getAll());
+        return GiftLinker.addLinkToGiftDTO(giftCertificateService.getAll());
 
     }
 
@@ -87,11 +87,8 @@ public class GiftController {
     @GetMapping("/read/{id}")
     @ResponseStatus(HttpStatus.OK)
     public GiftDTO getById (@PathVariable("id") Long id) throws NoSuchGiftException {
-
         log.info("Get Gift by id = '{}'",id);
-
         GiftDTO giftDTO = giftCertificateService.get(id);
-
         Link selfLink = linkTo(methodOn(GiftController.class).getById(
                 giftDTO.getId())).withSelfRel();
 

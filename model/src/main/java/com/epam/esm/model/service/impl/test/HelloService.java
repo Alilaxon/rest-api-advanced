@@ -1,7 +1,6 @@
-package com.epam.esm.model.service.impl;
+package com.epam.esm.model.service.impl.test;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class HelloService {

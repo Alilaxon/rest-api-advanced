@@ -28,15 +28,15 @@ CREATE TABLE gifts_tags (
  PRIMARY KEY (id)
 );
 
--- CREATE TABLE users
--- (
---     id           SERIAL           NOT NULL,
---     user_name    VARCHAR(64)      NOT NULL,
---     password     VARCHAR(64)      NOT NULL,
---     email        VARCHAR(64)      NOT NULL,
---     PRIMARY KEY (id)
---
--- );
+CREATE TABLE users
+(
+    id           SERIAL           NOT NULL,
+    user_name    VARCHAR(64)      NOT NULL,
+    password     VARCHAR(64)      NOT NULL,
+    email        VARCHAR(64)      NOT NULL,
+    PRIMARY KEY (id)
+
+);
 --
 -- CREATE TABLE orders
 -- (

@@ -2,8 +2,9 @@ package com.epam.esm.persistance.entity;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import java.util.Objects;
 
-@Entity
+
 @Table(schema = "users")
 public class User {
 
@@ -59,5 +60,28 @@ public class User {
 
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (!(o instanceof User)) return false;
+      User user = (User) o;
+      return userName.equals(user.userName) && email.equals(user.email);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(userName, email);
+   }
+
+   @Override
+   public String toString() {
+      return "User{" +
+              "id=" + id +
+              ", userName='" + userName + '\'' +
+              ", email='" + email + '\'' +
+              ", password='" + password + '\'' +
+              '}';
    }
 }

@@ -101,6 +101,7 @@ public class GiftRepositoryImpl implements GiftRepository {
             return Optional.ofNullable(giftCertificate);
 
         } catch (SQLException e) {
+
             throw new RuntimeException(e);
         }
     }

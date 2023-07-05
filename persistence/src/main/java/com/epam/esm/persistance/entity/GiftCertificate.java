@@ -1,11 +1,10 @@
 package com.epam.esm.persistance.entity;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+
 @Table(schema = "gifts")
 public class GiftCertificate {
 
@@ -30,9 +29,9 @@ public class GiftCertificate {
     @Column(name = "last_Update_Date")
     private String lastUpdateDate;
     @ManyToMany
-    @JoinTable(name = "gift_tags",
+    @JoinTable(name = "gifts_tags",
     joinColumns = @JoinColumn(name = "gift_id"),
-    inverseJoinColumns = @JoinColumn(name = "gift_id"))
+    inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tags;
 
     public List<Tag> getTags() {
@@ -50,9 +49,8 @@ public class GiftCertificate {
     public GiftCertificate() {
     }
 
-    public GiftCertificate(Long id, String name,
-                           String description, Long price,
-                           Long duration, String createDate,
+    public GiftCertificate(Long id, String name, String description,
+                           Long price, Long duration, String createDate,
                            String lastUpdateDate,List<Tag> tags) {
         this.id = id;
         this.name = name;

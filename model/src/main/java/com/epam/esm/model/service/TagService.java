@@ -17,11 +17,11 @@ public interface TagService extends TableFiller {
 
     Tag getById(Long id);
 
-    List<Tag> getAll();
+    List<TagDTO> getAll();
 
     Long deleteById(Long id);
 
-    Tag GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
+    Tag getTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
 
 
 

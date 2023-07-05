@@ -46,7 +46,8 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    public GiftCertificate create(GiftDTO giftDto) throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException {
+    public GiftCertificate create(GiftDTO giftDto)
+            throws GiftNameIsReservedException, InvalidGiftDtoException, InvalidTagException {
         GiftValidator.checkGiftDto(giftDto);
         if (checkGiftName(giftDto)) {
             throw new GiftNameIsReservedException(giftDto.getName());

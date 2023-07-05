@@ -1,4 +1,4 @@
-package com.epam.esm.service.implementation;
+package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.service.impl.TagServiceImpl;
 import com.epam.esm.persistance.dao.TagRepository;

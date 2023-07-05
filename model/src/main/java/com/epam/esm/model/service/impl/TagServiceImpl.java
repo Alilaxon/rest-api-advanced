@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -47,9 +48,14 @@ public class TagServiceImpl implements TagService {
         return tagRepository.findById(id);
     }
     @Override
-    public List<Tag> getAll() {
+    public List<TagDTO> getAll() {
 
-        return tagRepository.getAll();
+        return tagRepository
+                .getAll().stream()
+                .map(tag -> new TagDTO(
+                        tag.getId(),
+                        tag.getName()))
+                .collect(Collectors.toList());
     }
 
 
@@ -61,7 +67,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders() {
+    public Tag getTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders() {
         return tagRepository.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders().get();
     }
 

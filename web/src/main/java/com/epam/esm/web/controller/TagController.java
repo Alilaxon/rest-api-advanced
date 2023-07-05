@@ -7,6 +7,7 @@ import com.epam.esm.model.exception.InvalidTagDtoException;
 import com.epam.esm.model.exception.TagNameIsReservedException;
 import com.epam.esm.model.service.TagService;
 import com.epam.esm.persistance.entity.Tag;
+import com.epam.esm.web.utils.TagLinker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,9 @@ public class TagController {
     }
 
     @RequestMapping("/get-all")
-    public List<Tag> getAll() {
+    public List<TagDTO> getAll() {
 
-        return tagService.getAll();
+        return TagLinker.addLinkToTagDTO(tagService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -62,9 +63,9 @@ public class TagController {
     }
 
     @GetMapping("/popularTag")
-    public Tag MostPoplarTag() {
+    public Tag mostPoplarTag() {
 
-        return tagService.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
+        return tagService.getTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
     }
 
     @GetMapping("/fillDataBase")

@@ -38,14 +38,18 @@ VALUES (DEFAULT,(SELECT id FROM gifts WHERE gift_name ='giftN3'),
 INSERT INTO gifts_tags
 VALUES (DEFAULT,(SELECT id FROM gifts WHERE gift_name ='giftN4'),
         (SELECT id FROM tags WHERE tag_name ='red'));
-CREATE TABLE users
-(
-    id           SERIAL           NOT NULL,
-    user_name    VARCHAR(64)      NOT NULL,
-    password     VARCHAR(64)      NOT NULL,
-    email        VARCHAR(64)      NOT NULL,
-    PRIMARY KEY (id)
 
-);
 INSERT INTO users
 VALUES (DEFAULT,'user','123456','user@gmail.com');
+
+INSERT INTO users
+VALUES (DEFAULT,'Harry','123456','Harry@gmail.com');
+
+INSERT INTO users
+VALUES (DEFAULT,'Dobby','123456','Dobby@gmail.com');
+
+INSERT INTO users
+VALUES (DEFAULT,'Draco','123456','Draco@gmail.com');
+
+INSERT INTO users
+VALUES (DEFAULT,'Neville','123456','Draco@gmail.com');

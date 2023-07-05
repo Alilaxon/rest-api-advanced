@@ -34,16 +34,9 @@ public class GeneralExceptionHandler {
         return new ResponseEntity<>(giftExceptionResponse, notFound);
     }
 
-//    @ExceptionHandler(value = {Exception.class})
-//    public ResponseEntity<Object> handleRequestException(Exception e){
-//
-//        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-//        String message = toLocale("HttpRequestException");
-//        RequestException requestException = new RequestException(
-//                message,e,badRequest, ZonedDateTime.now());
-//
-//        return new ResponseEntity<>(requestException,badRequest);
-//    }
+
+
+
 
     private String toLocale(String message) {
         return messageSource.getMessage(message, null, LocaleContextHolder.getLocale());
