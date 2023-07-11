@@ -1,4 +1,4 @@
-package com.epam.esm.model.confing;
+package com.epam.esm.model.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

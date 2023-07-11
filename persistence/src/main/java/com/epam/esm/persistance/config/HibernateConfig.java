@@ -22,7 +22,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConfig {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
 
     @Value("${hibernate.hbm2ddl.auto}")
@@ -48,7 +48,6 @@ public class HibernateConfig {
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setPackagesToScan("com.epam.esm.persistance");
         sessionFactory.setHibernateProperties(hibernateProperties());
-
         return sessionFactory;
     }
 
@@ -60,7 +59,7 @@ public class HibernateConfig {
         return transactionManager;
     }
 
-    private final Properties hibernateProperties() {
+    private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto",hbm2ddl);
         hibernateProperties.setProperty("hibernate.dialect",dialect);

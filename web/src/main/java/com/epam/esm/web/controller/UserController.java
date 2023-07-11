@@ -2,7 +2,9 @@ package com.epam.esm.web.controller;
 
 
 import com.epam.esm.model.dto.UserDTO;
+import com.epam.esm.model.exception.NoSuchUserException;
 import com.epam.esm.model.service.UserService;
+import com.epam.esm.web.utils.UserLinker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +25,13 @@ public class UserController {
     @GetMapping
     public List<UserDTO> getAll(){
 
-        return userService.getAll();
+        return UserLinker.addLinkToGiftDTO(userService.getAll());
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO get(@PathVariable ("id") Long id){
-      return userService.getById(id);
+    public UserDTO get(@PathVariable ("id") Long id) throws NoSuchUserException {
+
+        return userService.getById(id);
     }
 
     @GetMapping("/fillDataBase")

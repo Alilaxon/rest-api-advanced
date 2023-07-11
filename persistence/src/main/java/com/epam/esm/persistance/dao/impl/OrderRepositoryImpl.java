@@ -1,18 +1,12 @@
 package com.epam.esm.persistance.dao.impl;
 
 import com.epam.esm.persistance.dao.OrderRepository;
-import com.epam.esm.persistance.dao.mapper.Columns;
-import com.epam.esm.persistance.dao.mapper.GiftMapper;
 import com.epam.esm.persistance.dao.mapper.OrderMapper;
-import com.epam.esm.persistance.dao.mapper.TagMapper;
-import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Order;
-import com.epam.esm.persistance.entity.Tag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +29,22 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Optional<Order> get(long id) {
 
-        return Optional.empty();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM orders WHERE id=?");
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            Order order = null;
+            while (resultSet.next()) {
+                order = OrderMapper.extractOrder(resultSet);
+            }
+            statement.close();
+
+            return Optional.ofNullable(order);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -69,38 +78,37 @@ public class OrderRepositoryImpl implements OrderRepository {
             preparedStatement.setString(4,order.getCreateDate());
             preparedStatement.executeUpdate();
             preparedStatement.close();
-
             log.info("order was created");
-
         } catch (SQLException e) {
-
-            log.warn("Catch SQLException");
-
-            throw new RuntimeException(e);
+            log.error("Catch SQLException");
         }
-
     }
 
     @Override
     public void delete(Order order) {
-
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM orders WHERE id =?");
+            statement.setLong(1, order.getId());
+            statement.execute();
+            statement.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Order> getAllByUserId(Long id) {
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM orders WHERE user_id = ?");
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orderList.add(OrderMapper.extractOrder(resultSet));
-            }
-            statement.close();
+            }statement.close();
         } catch (SQLException e) {
-
             throw new RuntimeException(e);
         }
         return orderList;

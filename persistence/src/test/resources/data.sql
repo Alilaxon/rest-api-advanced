@@ -53,3 +53,6 @@ VALUES (DEFAULT,'Draco','123456','Draco@gmail.com');
 
 INSERT INTO users
 VALUES (DEFAULT,'Neville','123456','Draco@gmail.com');
+
+INSERT INTO orders
+VALUES (DEFAULT,1000,1,1,'2023-05-25');

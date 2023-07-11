@@ -66,7 +66,6 @@ public class GiftRepositoryImpl implements GiftRepository {
 
             PreparedStatement manyToMany = connection.prepareStatement
                     ("INSERT INTO gifts_tags(gift_id, tag_id) VALUES(?,?) ");
-
             for (Tag tag : gift.getTags()) {
                 manyToMany.setLong(1, gift.getId());
                 manyToMany.setLong(2, tag.getId());
@@ -80,7 +79,8 @@ public class GiftRepositoryImpl implements GiftRepository {
 
         } catch (SQLException e) {
 
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
+            return gift;
         }
 
     }
@@ -101,8 +101,8 @@ public class GiftRepositoryImpl implements GiftRepository {
             return Optional.ofNullable(giftCertificate);
 
         } catch (SQLException e) {
-
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
+            return Optional.empty();
         }
     }
 
@@ -179,7 +179,7 @@ public class GiftRepositoryImpl implements GiftRepository {
     }
 
     @Override
-    public List<GiftCertificate> findAllByTag(Long id ,Long page) {
+    public List<GiftCertificate> findAllByTag(Long id ,Long page ,Long limit) {
 
         log.info("tag id = {}",id);
 
@@ -190,9 +190,10 @@ public class GiftRepositoryImpl implements GiftRepository {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM  gifts " +
                             "JOIN gifts_tags gt on gifts.id = gt.gift_id WHERE tag_id = ? " +
-                            "ORDER BY gift_name ASC LIMIT 50 OFFSET ?");
+                            "ORDER BY gift_name ASC LIMIT ? OFFSET ?");
             statement.setLong(1, id);
-            statement.setLong(2,page);
+            statement.setLong(2,limit);
+            statement.setLong(3,page);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

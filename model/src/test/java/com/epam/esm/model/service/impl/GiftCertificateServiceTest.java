@@ -1,16 +1,13 @@
 package com.epam.esm.model.service.impl;
 
-import com.epam.esm.model.exception.NoSuchGiftException;
-import com.epam.esm.model.service.impl.GiftServiceImpl;
+import com.epam.esm.model.exception.*;
+
 import com.epam.esm.persistance.dao.GiftRepository;
 import com.epam.esm.persistance.dao.TagRepository;
 import com.epam.esm.persistance.dao.builders.GiftBuilder;
 import com.epam.esm.model.dto.GiftDTO;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
-import com.epam.esm.model.exception.GiftNameIsReservedException;
-import com.epam.esm.model.exception.InvalidGiftDtoException;
-import com.epam.esm.model.exception.InvalidTagException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -124,10 +121,10 @@ class GiftCertificateServiceTest {
     }
 
     @Test
-    void getAllByTag() {
-
-        when(giftRepository.findAllByTag(TAG_ONE.getId(),1L)).thenReturn(List.of(GIFT));
-        assertEquals(giftCertificateService.getAllByTag(TAG_ONE.getName(),1L),List.of(GIFT_DTO));
+    void getAllByTag() throws NoSuchTagNameException {
+        when(tagRepository.findByName(TAG_ONE.getName())).thenReturn(Optional.of(TAG_ONE));
+        when(giftRepository.findAllByTag(TAG_ONE.getId(),1L,50L)).thenReturn(List.of(GIFT));
+        assertEquals(giftCertificateService.getAllByTag(TAG_ONE.getName(),1L,50L),List.of(GIFT));
     }
 
     @Test

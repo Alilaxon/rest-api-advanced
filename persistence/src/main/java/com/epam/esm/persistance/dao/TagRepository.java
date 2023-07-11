@@ -12,9 +12,9 @@ public interface TagRepository {
 
     Tag save(Tag tag);
 
-    Tag findByName(String name);
+    Optional<Tag>findByName(String name);
 
-    Tag findById(Long id);
+    Optional<Tag> findById(Long id);
 
     Long delete(Long id);
 
@@ -22,5 +22,5 @@ public interface TagRepository {
 
     boolean existsByName (String name);
 
-    Optional <Tag> GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
+    Optional <Tag> getTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders();
 }

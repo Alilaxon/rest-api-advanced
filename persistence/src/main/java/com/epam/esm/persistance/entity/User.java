@@ -2,11 +2,12 @@ package com.epam.esm.persistance.entity;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.Objects;
 
-
-@Table(schema = "users")
-public class User {
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)

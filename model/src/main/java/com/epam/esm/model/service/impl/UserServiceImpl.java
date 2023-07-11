@@ -1,11 +1,13 @@
 package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.dto.UserDTO;
+import com.epam.esm.model.exception.NoSuchUserException;
 import com.epam.esm.model.service.UserService;
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.builders.UserBuilder;
 import com.epam.esm.persistance.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+
     private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(@Qualifier("hibernateUserRepositoryImpl") UserRepository userRepository) {
 
         this.userRepository = userRepository;
     }
@@ -35,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getById(Long id) {
-        User user = userRepository.get(id).get();
+    public UserDTO getById(Long id) throws NoSuchUserException {
+        User user = userRepository.get(id).orElseThrow(()-> new NoSuchUserException(id));
         return new UserDTO(user.getId(),
                 user.getUserName(),
                 user.getEmail(), 

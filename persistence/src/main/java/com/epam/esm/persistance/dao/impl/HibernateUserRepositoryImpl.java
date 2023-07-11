@@ -2,16 +2,17 @@ package com.epam.esm.persistance.dao.impl;
 
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
-
 import java.util.List;
 import java.util.Optional;
 @Repository
 public class HibernateUserRepositoryImpl implements UserRepository {
 
+    private static final Logger log = LogManager.getLogger(HibernateUserRepositoryImpl.class);
 
    private final EntityManager entityManager;
     @Autowired
@@ -28,23 +29,30 @@ public class HibernateUserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAll() {
-
-        return null;
-        //       entityManager.createQuery("SELECT e FROM users e").getResultList();
+        log.info("getAll");
+        return entityManager.createQuery("SELECT u FROM User u").getResultList();
     }
 
     @Override
     public void save(User user) {
-     entityManager.persist(user);
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public void delete(User user) {
-      entityManager.remove(user);
+        entityManager.remove(user);
     }
 
     @Override
     public void deleteByPartOfName(String name) {
-     //TODO
+        String partOfName = "%"+name+"%";
+       entityManager.getTransaction().begin();
+        entityManager.createNativeQuery("DELETE FROM users WHERE user_name LIKE ?")
+                .setParameter(1,partOfName)
+                .executeUpdate();
+      entityManager.getTransaction().commit();
+
     }
 }

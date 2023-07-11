@@ -3,6 +3,8 @@ package com.epam.esm.persistance.dao.impl;
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.mapper.UserMapper;
 import com.epam.esm.persistance.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @Primary
 public class UserRepositoryImpl implements UserRepository {
 
+    private static final Logger log = LogManager.getLogger(UserRepositoryImpl.class);
     private final DataSource dataSource;
 
     @Autowired
@@ -49,6 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAll() {
+        log.info("getAll");
         List<User> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement =
@@ -84,7 +88,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void delete(User user) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement =
-                    connection.prepareStatement("DELETE FROM gifts WHERE id =?");
+                    connection.prepareStatement("DELETE FROM users WHERE id =?");
             statement.setLong(1, user.getId());
             statement.execute();
             statement.close();

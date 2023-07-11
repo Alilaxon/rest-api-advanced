@@ -1,7 +1,6 @@
 package com.epam.esm.persistance.dao.impl;
 
 import com.epam.esm.persistance.config.EmbeddedJdbcConfig;
-import com.epam.esm.persistance.dao.impl.GiftRepositoryImpl;
 import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.persistance.entity.Tag;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,9 +31,7 @@ class GiftRepositoryImplTest {
     @BeforeEach
     void setUp() {
         giftDao = new GiftRepositoryImpl(dataSource);
-
         tag = new Tag(1l, "red");
-
         gift = new GiftCertificate(1l,
                 "giftN1",
                 "very good gift",
@@ -42,27 +39,20 @@ class GiftRepositoryImplTest {
                 7L,
                 "10.01.2023",
                 "12.01.2023", List.of(tag));
-
     }
-
-
     @Test
     void findAll() {
         //total number of gifts = 4
         assertEquals(giftDao.findAll().size(), 4);
     }
-
-
     @Test
     void findById() {
         Optional<GiftCertificate> gift = giftDao.findById(1L);
         assertNotNull(gift);
         assertEquals(gift.get().getId(), 1l);
     }
-
     @Test
     void findByName() {
-
         assertEquals(giftDao.findByName("giftN2").getName(), "giftN2");
     }
 
@@ -71,11 +61,10 @@ class GiftRepositoryImplTest {
         assertTrue(giftDao.existsByName("giftN3"));
     }
 
-
     @Test
     void findAllByTag() {
         // tag{id = 1 , name = "red"}
-        assertEquals(giftDao.findAllByTag(tag.getId(),1L).get(0).getTags().get(0).getId(), tag.getId());
+        assertEquals(giftDao.findAllByTag(tag.getId(),1L,50L).get(0).getTags().get(0).getId(), tag.getId());
     }
 
     @Test

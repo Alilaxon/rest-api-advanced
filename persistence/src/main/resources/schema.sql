@@ -1,7 +1,6 @@
 CREATE TABLE tags (
                       id SERIAL PRIMARY KEY    NOT NULL ,
                       tag_name  VARCHAR(32)    NOT NULL
-
 );
 
 
@@ -14,11 +13,8 @@ CREATE TABLE gifts
     duration     INT              NOT NULL,
     create_Date   VARCHAR(64)      NOT NULL,
     last_Update_Date VARCHAR(64)    NOT NULL ,
-
     PRIMARY KEY (id)
-
 );
-
 
 
 CREATE TABLE gifts_tags (
@@ -35,7 +31,6 @@ CREATE TABLE users
     password     VARCHAR(64)      NOT NULL,
     email        VARCHAR(64)      NOT NULL,
     PRIMARY KEY (id)
-
 );
 
 CREATE TABLE orders
@@ -48,4 +43,19 @@ CREATE TABLE orders
     PRIMARY KEY (id)
 );
 
-DROP TABLE orders;
+CREATE TABLE roles
+(
+    id SERIAL NOT NULL ,
+    name VARCHAR(64),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE users_roles
+(   id SERIAL,
+    user_id INT NOT NULL,
+    role_id INT NOT NULL ,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES roles (id)
+
+);

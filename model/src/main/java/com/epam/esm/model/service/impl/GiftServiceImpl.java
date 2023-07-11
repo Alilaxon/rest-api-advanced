@@ -1,10 +1,7 @@
 package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.dto.GiftDTO;
-import com.epam.esm.model.exception.GiftNameIsReservedException;
-import com.epam.esm.model.exception.InvalidGiftDtoException;
-import com.epam.esm.model.exception.InvalidTagException;
-import com.epam.esm.model.exception.NoSuchGiftException;
+import com.epam.esm.model.exception.*;
 import com.epam.esm.model.service.GiftService;
 import com.epam.esm.model.utils.GiftValidator;
 import com.epam.esm.model.utils.TagValidator;
@@ -81,13 +78,13 @@ public class GiftServiceImpl implements GiftService {
     }
 
     @Override
-    public List<GiftCertificate> getAllByTag(String tag,Long page) {
-        log.info("Find by tag {}", tag);
-        Long tagId = tagRepository.findByName(tag).getId();
-
-        Integer limit = 50;
+    public List<GiftCertificate> getAllByTag(String tag,Long page , Long size) throws NoSuchTagNameException {
+        log.info("Find by tagName {}", tag);
+        Long tagId = tagRepository.findByName(tag).orElseThrow(() -> new NoSuchTagNameException(tag)).getId();
+        log.info("Tag with id={} found",tagId);
+        Long limit = size;
         Long offset = limit*(page -1);
-        return giftRepository.findAllByTag(tagId,offset);
+        return giftRepository.findAllByTag(tagId,offset ,limit);
     }
 
     @Override

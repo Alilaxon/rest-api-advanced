@@ -37,13 +37,12 @@ CREATE TABLE users
     PRIMARY KEY (id)
 
 );
---
--- CREATE TABLE orders
--- (
---     id            SERIAL       NOT NULL,
---     order_price    INT         NOT NULL,
---     user_id       INT          NOT NULL,
---     gift_id       INT          NOT NULL,
---     PRIMARY KEY (id)
---
--- );
+CREATE TABLE orders
+(
+    id            SERIAL      NOT NULL,
+    order_price   INT         NOT NULL,
+    user_id       INT REFERENCES users (id) ON DELETE CASCADE,
+    gift_id       INT REFERENCES gifts (id) ON DELETE CASCADE,
+    create_date   VARCHAR(64)      NOT NULL,
+    PRIMARY KEY (id)
+);

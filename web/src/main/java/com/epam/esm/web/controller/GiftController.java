@@ -1,10 +1,7 @@
 package com.epam.esm.web.controller;
 import com.epam.esm.model.dto.GiftDTO;
-import com.epam.esm.model.exception.NoSuchGiftException;
+import com.epam.esm.model.exception.*;
 import com.epam.esm.persistance.entity.GiftCertificate;
-import com.epam.esm.model.exception.GiftNameIsReservedException;
-import com.epam.esm.model.exception.InvalidGiftDtoException;
-import com.epam.esm.model.exception.InvalidTagException;
 import com.epam.esm.model.service.GiftService;
 import com.epam.esm.model.service.impl.GiftServiceImpl;
 import com.epam.esm.web.utils.GiftLinker;
@@ -38,9 +35,7 @@ public class GiftController {
 
     @GetMapping("/get-all")
     public List<GiftDTO> getAll() {
-
         log.info("get_all");
-
         return GiftLinker.addLinkToGiftDTO(giftCertificateService.getAll());
 
     }
@@ -49,23 +44,24 @@ public class GiftController {
     public List<GiftCertificate> getAllByTag
             (@RequestParam("tag") String tag ,
              @RequestParam("order") String order,
-            @RequestParam(name = "page",required = false, defaultValue = "1")Long page){
+            @RequestParam(name = "page",required = false, defaultValue = "1")Long page,
+             @RequestParam(name = "size",required = false, defaultValue = "50")Long size)
+            throws NoSuchTagNameException {
 
         log.info("get all by tag = {}",tag);
         if (order.equals("desc")){
             log.info("sort all by desc");
-           return Sorter.sorting(giftCertificateService.getAllByTag(tag,page));
+           return Sorter.sorting(giftCertificateService.getAllByTag(tag,page,size));
         }
         log.info("sort all by asc");
-        return giftCertificateService.getAllByTag(tag,page);
+        return giftCertificateService.getAllByTag(tag,page,size);
     }
+
     @GetMapping("/getAllByDescription")
     public List<GiftCertificate> getAllByDescription (
             @RequestParam("description")String description,
             @RequestParam("order") String order){
-
         log.info("get all by description = {}",description);
-
         if (order.equals("desc")){
             log.info("sort all by desc");
             return Sorter.sorting(giftCertificateService.getAllByDescription(description));
@@ -78,7 +74,6 @@ public class GiftController {
     @PostMapping("/create")
     public ResponseEntity<Long> create(@RequestBody GiftDTO giftDto)
             throws GiftNameIsReservedException, InvalidTagException, InvalidGiftDtoException {
-
         log.info("Gift '{}' will be create",giftDto.getName());
         Long id = giftCertificateService.create(giftDto).getId();
 

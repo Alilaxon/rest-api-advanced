@@ -1,9 +1,7 @@
 package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.dto.TagDTO;
-import com.epam.esm.model.exception.InvalidGiftDtoException;
-import com.epam.esm.model.exception.InvalidTagDtoException;
-import com.epam.esm.model.exception.TagNameIsReservedException;
+import com.epam.esm.model.exception.*;
 import com.epam.esm.model.service.TagService;
 import com.epam.esm.model.utils.TagValidator;
 import com.epam.esm.persistance.dao.TagRepository;
@@ -43,9 +41,8 @@ public class TagServiceImpl implements TagService {
         return tagRepository.save(TagBuilder.builder().name(tagDto.getName()).build());
     }
     @Override
-    public Tag getById(Long id) {
-
-        return tagRepository.findById(id);
+    public Tag getById(Long id) throws NoSuchTagException {
+        return tagRepository.findById(id).orElseThrow(() -> new NoSuchTagException(id));
     }
     @Override
     public List<TagDTO> getAll() {
@@ -68,7 +65,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag getTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders() {
-        return tagRepository.GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders().get();
+        return tagRepository.getTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders().get();
     }
 
     private boolean checkTagName(TagDTO tagDto) {

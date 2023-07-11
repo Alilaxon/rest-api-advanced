@@ -53,7 +53,7 @@ public class TagRepositoryImpl implements TagRepository {
             }
             statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
         return tagList;
     }
@@ -76,13 +76,13 @@ public class TagRepositoryImpl implements TagRepository {
             }
             statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
         return tag;
     }
 
     @Override
-    public Tag findByName(String name) {
+    public Optional<Tag> findByName(String name) {
         log.info("Find Tag by name {}",name);
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM tags WHERE tag_name=?");
@@ -93,16 +93,16 @@ public class TagRepositoryImpl implements TagRepository {
                 tag = TagMapper.extractTag(resultSet);
             }
             statement.close();
-
-            return tag;
+            return Optional.ofNullable(tag);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
+            return Optional.empty();
         }
     }
 
     @Override
-    public Tag findById(Long id) {
+    public Optional<Tag> findById(Long id) {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM tags WHERE id=?");
             statement.setLong(1, id);
@@ -112,11 +112,11 @@ public class TagRepositoryImpl implements TagRepository {
                 tag = TagMapper.extractTag(resultSet);
             }
             statement.close();
-
-            return tag;
+            return Optional.ofNullable(tag);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
+            return Optional.empty();
         }
     }
 
@@ -130,10 +130,8 @@ public class TagRepositoryImpl implements TagRepository {
             statement.setLong(1, id);
             statement.execute();
             statement.close();
-
-
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
      return id;
     }
@@ -147,10 +145,8 @@ public class TagRepositoryImpl implements TagRepository {
             statement.setString(1, partOfName);
             statement.execute();
             statement.close();
-
         } catch (SQLException e) {
-
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -172,7 +168,7 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public Optional<Tag> GetTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders() {
+    public Optional<Tag> getTheMostWidelyUsedTagOfUserWithTheHighestCostOfAllOrders() {
         Tag tag = new Tag();
         Long id = null;
         try (Connection connection = dataSource.getConnection()) {
@@ -193,7 +189,8 @@ public class TagRepositoryImpl implements TagRepository {
             return Optional.ofNullable(tag);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.error(e.getMessage());
+            return Optional.empty();
         }
     }
 }

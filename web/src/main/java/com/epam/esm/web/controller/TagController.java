@@ -4,6 +4,7 @@ package com.epam.esm.web.controller;
 import com.epam.esm.model.dto.TagDTO;
 import com.epam.esm.model.exception.InvalidGiftDtoException;
 import com.epam.esm.model.exception.InvalidTagDtoException;
+import com.epam.esm.model.exception.NoSuchTagException;
 import com.epam.esm.model.exception.TagNameIsReservedException;
 import com.epam.esm.model.service.TagService;
 import com.epam.esm.persistance.entity.Tag;
@@ -39,7 +40,7 @@ public class TagController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Tag getById(@PathVariable Long id) {
+    public Tag getById(@PathVariable Long id) throws NoSuchTagException {
 
         return tagService.getById(id);
 

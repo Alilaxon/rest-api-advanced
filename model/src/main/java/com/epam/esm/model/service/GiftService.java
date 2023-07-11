@@ -1,11 +1,8 @@
 package com.epam.esm.model.service;
 
 import com.epam.esm.model.dto.GiftDTO;
-import com.epam.esm.model.exception.NoSuchGiftException;
+import com.epam.esm.model.exception.*;
 import com.epam.esm.persistance.entity.GiftCertificate;
-import com.epam.esm.model.exception.GiftNameIsReservedException;
-import com.epam.esm.model.exception.InvalidGiftDtoException;
-import com.epam.esm.model.exception.InvalidTagException;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ public interface GiftService {
 
     List<GiftDTO> getAll();
 
-    List<GiftCertificate> getAllByTag(String tag ,Long page);
+    List<GiftCertificate> getAllByTag(String tag ,Long page ,Long size) throws NoSuchTagNameException;
 
     List<GiftCertificate> getAllByDescription(String description);
 

@@ -14,6 +14,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.sql.DataSource;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -50,12 +52,13 @@ class TagRepositoryImplTest {
 
     @Test
     void findByName() {
-        assertEquals(tagDao.findByName("red").getName(),tag.getName());
+
+        assertEquals(tagDao.findByName("red").get().getName(),tag.getName());
     }
 
     @Test
     void findById() {
-        assertEquals(tagDao.findById(1L).getId(),tag.getId());
+        assertEquals(tagDao.findById(1L).get().getId(),tag.getId());
     }
 
     @Test
@@ -64,7 +67,7 @@ class TagRepositoryImplTest {
         Long id = tagDao.save(TestTag).getId();
         assertNotNull(tagDao.findById(id));
         tagDao.delete(id);
-        assertNull(tagDao.findById(id));
+        assertEquals(tagDao.findById(id) , Optional.empty());
     }
 
     @Test
