@@ -9,7 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.persistence.EntityManager;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ContextConfiguration(classes = {EmbeddedJdbcConfig.class})
 @ActiveProfiles("integration-test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class HibernateUserRepositoryImplTest {
+class HibernateUserRepositoryTest {
 
-    private HibernateUserRepositoryImpl userRepository;
+    private HibernateUserRepository userRepository;
 
     private User user;
 
@@ -30,7 +29,7 @@ class HibernateUserRepositoryImplTest {
 
     @BeforeEach
     void setUp() {
-        userRepository = new HibernateUserRepositoryImpl(manager);
+        userRepository = new HibernateUserRepository(manager);
         Long id = 6L;
         String name = "testUser";
         String password = "123456";

@@ -16,15 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(@Qualifier("hibernateUserRepositoryImpl") UserRepository userRepository) {
-
+    public UserServiceImpl(@Qualifier("hibernateUserRepository") UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     @Override
     public User create(UserDTO userDTO) {
@@ -39,10 +36,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getById(Long id) throws NoSuchUserException {
-        User user = userRepository.get(id).orElseThrow(()-> new NoSuchUserException(id));
+        User user = userRepository.get(id).orElseThrow(() -> new NoSuchUserException(id));
         return new UserDTO(user.getId(),
                 user.getUserName(),
-                user.getEmail(), 
+                user.getEmail(),
                 user.getPassword());
     }
 
@@ -62,22 +59,23 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(userRepository.get(id).get());
         return id;
     }
+
     @Override
-    public void fillTable(){
+    public void fillTable() {
         for (int i = 0; i < 1000; i++) {
             String name = "User" + i;
             String email = "email" + i + "@gmail.com";
             String password = "12345678" + i;
-           userRepository.save(UserBuilder.builder()
-                   .userName(name)
-                   .password(password)
-                   .email(email).build());
+            userRepository.save(UserBuilder.builder()
+                    .userName(name)
+                    .password(password)
+                    .email(email).build());
         }
     }
+
     @Override
-    public void cleanTable(){
+    public void cleanTable() {
 
         userRepository.deleteByPartOfName("ser");
     }
-        
 }

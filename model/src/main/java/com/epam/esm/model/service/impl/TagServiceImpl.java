@@ -1,7 +1,10 @@
 package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.dto.TagDTO;
-import com.epam.esm.model.exception.*;
+import com.epam.esm.model.exception.InvalidGiftDtoException;
+import com.epam.esm.model.exception.InvalidTagDtoException;
+import com.epam.esm.model.exception.NoSuchTagException;
+import com.epam.esm.model.exception.TagNameIsReservedException;
 import com.epam.esm.model.service.TagService;
 import com.epam.esm.model.utils.TagValidator;
 import com.epam.esm.persistance.dao.TagRepository;
@@ -40,10 +43,12 @@ public class TagServiceImpl implements TagService {
         log.info("Tag '{}' will be create", tagDto.getName());
         return tagRepository.save(TagBuilder.builder().name(tagDto.getName()).build());
     }
+
     @Override
     public Tag getById(Long id) throws NoSuchTagException {
         return tagRepository.findById(id).orElseThrow(() -> new NoSuchTagException(id));
     }
+
     @Override
     public List<TagDTO> getAll() {
 
@@ -72,6 +77,7 @@ public class TagServiceImpl implements TagService {
 
         return tagRepository.existsByName(tagDto.getName());
     }
+
     @Override
     public void fillTable() {
         for (int i = 0; i < 1000; i++) {
@@ -79,8 +85,9 @@ public class TagServiceImpl implements TagService {
             tagRepository.save(TagBuilder.builder().name(name).build());
         }
     }
+
     @Override
-    public void cleanTable(){
+    public void cleanTable() {
         tagRepository.deleteByPartOfName("estTag");
     }
 }

@@ -15,19 +15,17 @@ import java.util.List;
 
 @RestControllerAdvice
 public class GeneralExceptionHandler {
-
     private final ResourceBundleMessageSource messageSource;
 
     @Autowired
     public GeneralExceptionHandler(ResourceBundleMessageSource messageSource) {
-
         this.messageSource = messageSource;
     }
 
     @ExceptionHandler(value = {NoSuchGiftException.class})
     public ResponseEntity<Object> handleNoSuchGiftException(NoSuchGiftException e) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        String message = toLocale("NoSuchGiftException",List.of(e.getId()));
+        String message = toLocale("NoSuchGiftException", List.of(e.getId()));
         GiftExceptionResponse giftExceptionResponse = new GiftExceptionResponse(message, notFound);
 
         return new ResponseEntity<>(giftExceptionResponse, notFound);
@@ -36,7 +34,7 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(value = {GiftNameIsReservedException.class})
     public ResponseEntity<Object> handleNoSuchGiftException(GiftNameIsReservedException e) {
         HttpStatus notAcceptable = HttpStatus.NOT_ACCEPTABLE;
-        String message = toLocale("GiftNameIsReservedException",List.of(e.getName()));
+        String message = toLocale("GiftNameIsReservedException", List.of(e.getName()));
         GiftExceptionResponse giftExceptionResponse = new GiftExceptionResponse(message, notAcceptable);
 
         return new ResponseEntity<>(giftExceptionResponse, notAcceptable);
@@ -54,7 +52,7 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(value = {NoSuchTagException.class})
     public ResponseEntity<Object> handleNoSuchTagException(NoSuchTagException e) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        String message = toLocale("NoSuchTagException",List.of(e.getId()));
+        String message = toLocale("NoSuchTagException", List.of(e.getId()));
         GiftExceptionResponse giftExceptionResponse = new GiftExceptionResponse(message, notFound);
 
         return new ResponseEntity<>(giftExceptionResponse, notFound);
@@ -63,7 +61,7 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(value = {NoSuchTagNameException.class})
     public ResponseEntity<Object> handleNoSuchTagException(NoSuchTagNameException e) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        String message = toLocale("NoSuchTagNameException",List.of(e.getName()));
+        String message = toLocale("NoSuchTagNameException", List.of(e.getName()));
         GiftExceptionResponse giftExceptionResponse = new GiftExceptionResponse(message, notFound);
 
         return new ResponseEntity<>(giftExceptionResponse, notFound);
@@ -72,7 +70,7 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(value = {TagNameIsReservedException.class})
     public ResponseEntity<Object> handleNoSuchTagException(TagNameIsReservedException e) {
         HttpStatus notAcceptable = HttpStatus.NOT_ACCEPTABLE;
-        String message = toLocale("TagNameIsReservedException",List.of(e.getName()));
+        String message = toLocale("TagNameIsReservedException", List.of(e.getName()));
         GiftExceptionResponse giftExceptionResponse = new GiftExceptionResponse(message, notAcceptable);
 
         return new ResponseEntity<>(giftExceptionResponse, notAcceptable);
@@ -90,7 +88,7 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(value = {NoSuchUserException.class})
     public ResponseEntity<Object> handleNoSuchUserException(NoSuchUserException e) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
-        String message = toLocale("NoSuchUserException",List.of(e.getId()));
+        String message = toLocale("NoSuchUserException", List.of(e.getId()));
         GiftExceptionResponse giftExceptionResponse = new GiftExceptionResponse(message, notFound);
 
         return new ResponseEntity<>(giftExceptionResponse, notFound);

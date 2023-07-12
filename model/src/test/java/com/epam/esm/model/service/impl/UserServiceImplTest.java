@@ -1,6 +1,7 @@
 package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.dto.UserDTO;
+import com.epam.esm.model.exception.NoSuchUserException;
 import com.epam.esm.model.service.UserService;
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.builders.UserBuilder;
@@ -46,7 +47,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getById() {
+    void getById() throws NoSuchUserException {
         when(userRepository.get(1L)).thenReturn(Optional.of(user));
         assertEquals(userService.getById(1L), userDTO);
     }

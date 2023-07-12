@@ -10,13 +10,13 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 @Repository
-public class HibernateUserRepositoryImpl implements UserRepository {
+public class HibernateUserRepository implements UserRepository {
 
-    private static final Logger log = LogManager.getLogger(HibernateUserRepositoryImpl.class);
+    private static final Logger log = LogManager.getLogger(HibernateUserRepository.class);
 
    private final EntityManager entityManager;
     @Autowired
-    public HibernateUserRepositoryImpl(EntityManager entityManager) {
+    public HibernateUserRepository(EntityManager entityManager) {
 
         this.entityManager = entityManager;
     }
