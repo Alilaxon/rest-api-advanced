@@ -1,6 +1,7 @@
 package com.epam.esm.persistance.dao.impl;
 
 import com.epam.esm.persistance.config.EmbeddedJdbcConfig;
+import com.epam.esm.persistance.dao.impl.hibernate.HibernateUserRepository;
 import com.epam.esm.persistance.entity.User;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,8 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {EmbeddedJdbcConfig.class})
@@ -31,7 +31,7 @@ class HibernateUserRepositoryTest {
     void setUp() {
         userRepository = new HibernateUserRepository(manager);
         Long id = 6L;
-        String name = "testUser";
+        String name = "Hibernate";
         String password = "123456";
         String email = "email";
         user = new User(null, name, password, email);
@@ -40,7 +40,7 @@ class HibernateUserRepositoryTest {
   @Test
   @Order(1)
     void getAll(){
-        assertEquals(userRepository.getAll().size(),5L);
+        assertEquals(5L, userRepository.getAll().size());
     }
     @Order(2)
     @Test
@@ -53,12 +53,20 @@ class HibernateUserRepositoryTest {
         user.setId(6L);
         assertEquals(userRepository.get( 6L),Optional.ofNullable(user));
     }
+
     @Test
     @Order(4)
+    void findByUserName() {
+        assertEquals(user,userRepository.findByUserName(user.getUserName()));
+    }
+
+    @Test
+    @Order(5)
     void delete(){
         User userForDelete = userRepository.get(6L).get();
-        assertEquals(userRepository.get(6L).get().getUserName(),user.getUserName());
+        assertTrue(userRepository.get(6L).isPresent());
         userRepository.delete(userForDelete);
-        assertEquals(userRepository.get(6L), Optional.empty());
+        assertFalse(userRepository.get(6L).isPresent());
     }
+
 }

@@ -28,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
     private final GiftRepository giftRepository;
     private final DateTimeFormatter dateTimeFormatter;
 
-
     public OrderServiceImpl(OrderRepository orderRepository,
                             UserRepository userRepository,
                             GiftRepository giftRepository,

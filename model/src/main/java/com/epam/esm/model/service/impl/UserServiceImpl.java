@@ -2,15 +2,21 @@ package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.dto.UserDTO;
 import com.epam.esm.model.exception.NoSuchUserException;
+import com.epam.esm.model.exception.UserAlreadyRegisteredException;
 import com.epam.esm.model.service.UserService;
+import com.epam.esm.persistance.dao.RoleRepository;
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.builders.UserBuilder;
 import com.epam.esm.persistance.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,17 +24,29 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final RoleRepository roleRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserServiceImpl(@Qualifier("hibernateUserRepository") UserRepository userRepository) {
+    public UserServiceImpl(@Qualifier("hibernateUserRepository") UserRepository userRepository,
+                           RoleRepository roleRepository,
+                           PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User create(UserDTO userDTO) {
+    public User create(UserDTO userDTO) throws UserAlreadyRegisteredException {
+      if(userRepository.findByUserName(userDTO.getUserName()).isPresent()){
+          throw new UserAlreadyRegisteredException(userDTO.getUserName());
+      }
         User user = UserBuilder.builder()
                 .userName(userDTO.getUserName())
                 .email(userDTO.getEmail())
-                .password(userDTO.getPassword())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .roles(List.of(roleRepository.findByName("ROLE_USER").get()))
                 .build();
         userRepository.save(user);
         return user;
@@ -42,6 +60,7 @@ public class UserServiceImpl implements UserService {
                 user.getEmail(),
                 user.getPassword());
     }
+
 
     @Override
     public List<UserDTO> getAll() {
@@ -58,6 +77,22 @@ public class UserServiceImpl implements UserService {
     public Long deleteById(Long id) {
         userRepository.delete(userRepository.get(id).get());
         return id;
+    }
+
+    @Override
+    public Optional<User> findByUserName(String name) {
+        return userRepository.findByUserName(name);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = findByUserName(username).orElseThrow(
+                () -> new UsernameNotFoundException(String.format("User not found")));
+        return new org.springframework.security.core.userdetails.User(
+                user.getUserName(),
+                user.getPassword(),
+                user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRoleName())).collect(Collectors.toList()));
+
     }
 
     @Override
@@ -78,4 +113,6 @@ public class UserServiceImpl implements UserService {
 
         userRepository.deleteByPartOfName("ser");
     }
+
+
 }

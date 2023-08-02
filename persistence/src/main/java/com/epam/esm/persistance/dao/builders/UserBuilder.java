@@ -1,6 +1,10 @@
 package com.epam.esm.persistance.dao.builders;
 
+import com.epam.esm.persistance.entity.Role;
 import com.epam.esm.persistance.entity.User;
+
+import java.util.Collection;
+import java.util.List;
 
 public class UserBuilder {
 
@@ -11,6 +15,8 @@ public class UserBuilder {
     private String email;
 
     private String password;
+
+    private Collection<Role> roles;
 
     public static UserBuilder builder() {
 
@@ -37,7 +43,12 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder roles(List<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+
     public User build (){
-        return new User(id,userName,email,password);
+        return new User(id,userName,email,password,roles);
     }
 }

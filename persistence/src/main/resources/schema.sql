@@ -46,16 +46,17 @@ CREATE TABLE orders
 CREATE TABLE roles
 (
     id SERIAL NOT NULL ,
-    name VARCHAR(64),
+    role_name VARCHAR(64),
     PRIMARY KEY (id)
 );
 
 CREATE TABLE users_roles
 (   id SERIAL,
-    user_id INT NOT NULL,
-    role_id INT NOT NULL ,
+    user_id INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    role_id INT NOT NULL REFERENCES roles (id) ON DELETE CASCADE,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (role_id) REFERENCES roles (id)
 
 );
+

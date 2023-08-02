@@ -26,7 +26,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
         this.password = password;
     }
 
-    @ConstructorProperties({"name", "email", "password"})
+    @ConstructorProperties({"userName", "email", "password"})
     public UserDTO(String userName, String email, String password) {
         this.userName = userName;
         this.email = email;

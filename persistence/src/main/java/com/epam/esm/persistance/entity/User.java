@@ -3,6 +3,7 @@ package com.epam.esm.persistance.entity;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +22,14 @@ public class User implements Serializable {
    @Column(name = "email")
    private String password;
 
+   @ManyToMany
+   @JoinTable(name = "users_roles",
+   joinColumns = @JoinColumn(name = "user_id"),
+   inverseJoinColumns = @JoinColumn(name = "role_id"))
+   private Collection<Role>roles ;
+
+
+
    public User() {
    }
 
@@ -29,6 +38,14 @@ public class User implements Serializable {
       this.userName = userName;
       this.email = email;
       this.password = password;
+   }
+
+   public User(Long id, String userName, String email, String password, Collection<Role> roles) {
+      this.id = id;
+      this.userName = userName;
+      this.email = email;
+      this.password = password;
+      this.roles = roles;
    }
 
    public Long getId() {
@@ -61,6 +78,14 @@ public class User implements Serializable {
 
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   public Collection<Role> getRoles() {
+      return roles;
+   }
+
+   public void setRoles(Collection<Role> roles) {
+      this.roles = roles;
    }
 
    @Override

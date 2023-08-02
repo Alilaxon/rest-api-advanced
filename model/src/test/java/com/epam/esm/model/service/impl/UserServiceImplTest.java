@@ -2,12 +2,15 @@ package com.epam.esm.model.service.impl;
 
 import com.epam.esm.model.dto.UserDTO;
 import com.epam.esm.model.exception.NoSuchUserException;
+import com.epam.esm.model.exception.UserAlreadyRegisteredException;
 import com.epam.esm.model.service.UserService;
+import com.epam.esm.persistance.dao.RoleRepository;
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.builders.UserBuilder;
 import com.epam.esm.persistance.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +23,12 @@ class UserServiceImplTest {
 
     private final UserRepository userRepository = mock(UserRepository.class);
 
-    private final UserService userService = new UserServiceImpl(userRepository);
+    private final RoleRepository roleRepository = mock(RoleRepository.class);
+
+    private final PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
+
+
+    private final UserService userService = new UserServiceImpl(userRepository,roleRepository,passwordEncoder);
 
     private User user;
 
@@ -42,7 +50,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void create() {
+    void create() throws UserAlreadyRegisteredException {
         assertEquals(userService.create(userDTO), user);
     }
 

@@ -38,6 +38,9 @@ class UserRepositoryImplTest {
     @Order(1)
     @Test
     void getAll() {
+        for (User u: userRepository.getAll()) {
+            System.out.println(u.toString());
+        }
         assertEquals(5, userRepository.getAll().size());
     }
 

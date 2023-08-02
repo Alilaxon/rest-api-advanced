@@ -110,4 +110,10 @@ public class UserRepositoryImpl implements UserRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Optional<User> findByUserName(String name) {
+        //TODO
+        return Optional.empty();
+    }
 }

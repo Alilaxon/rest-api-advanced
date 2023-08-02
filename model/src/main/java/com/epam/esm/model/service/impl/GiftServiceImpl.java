@@ -40,6 +40,7 @@ public class GiftServiceImpl implements GiftService {
         this.giftRepository = giftRepository;
         this.tagRepository = tagRepository;
         this.dateTimeFormatter = dateTimeFormatter;
+
     }
 
     @Override
@@ -81,7 +82,7 @@ public class GiftServiceImpl implements GiftService {
     public List<GiftCertificate> getAllByTag(String tag,Long page , Long size) throws NoSuchTagNameException {
         log.info("Find by tagName {}", tag);
         Long tagId = tagRepository.findByName(tag).orElseThrow(() -> new NoSuchTagNameException(tag)).getId();
-        log.info("Tag with id={} found",tagId);
+        log.info("Tag with id={} found ,page = {}, size = {}",tagId,page,size);
         Long limit = size;
         Long offset = limit*(page -1);
         return giftRepository.findAllByTag(tagId,offset ,limit);

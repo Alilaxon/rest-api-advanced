@@ -3,13 +3,13 @@ package com.epam.esm.web.exeptions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.http.HttpStatus;
 
-public class GiftExceptionResponse {
+public class ExceptionResponse {
     int errorCode;
     String message;
     @JsonIgnore
     HttpStatus httpStatus;
 
-    public GiftExceptionResponse(String message, HttpStatus httpStatus) {
+    public ExceptionResponse(String message, HttpStatus httpStatus) {
         this.message = message;
         this.httpStatus = httpStatus;
         this.errorCode = errorCode(httpStatus);
