@@ -9,7 +9,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 
     private Long id;
 
-    private String userName;
+    private String username;
 
     private String email;
 
@@ -17,21 +17,21 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 
     public UserDTO() {
     }
-
-    public UserDTO(Long id, String userName,
+    @ConstructorProperties({"username", "email", "password"})
+    public UserDTO(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+    public UserDTO(Long id, String username,
                    String email, String password) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    @ConstructorProperties({"userName", "email", "password"})
-    public UserDTO(String userName, String email, String password) {
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-    }
+
 
     public Long getId() {
         return id;
@@ -41,12 +41,12 @@ public class UserDTO extends RepresentationModel<UserDTO> {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -69,7 +69,7 @@ public class UserDTO extends RepresentationModel<UserDTO> {
     public String toString() {
         return "UserDTO{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
@@ -80,11 +80,11 @@ public class UserDTO extends RepresentationModel<UserDTO> {
         if (this == o) return true;
         if (!(o instanceof UserDTO)) return false;
         UserDTO userDTO = (UserDTO) o;
-        return userName.equals(userDTO.userName) && email.equals(userDTO.email);
+        return username.equals(userDTO.username) && email.equals(userDTO.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userName, email);
+        return Objects.hash(username, email);
     }
 }

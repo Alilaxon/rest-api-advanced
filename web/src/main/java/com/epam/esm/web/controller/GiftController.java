@@ -9,7 +9,8 @@ import com.epam.esm.web.utils.GiftLinker;
 import com.epam.esm.web.utils.Sorter;
 import com.epam.esm.web.utils.UrlParts;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping(UrlParts.GIFTS)
 public class GiftController {
 
-    private static final Logger log = LogManager.getLogger(GiftController.class);
+    private static final Logger log = LoggerFactory.getLogger(GiftController.class);
     private final GiftService giftCertificateService;
 
     @Autowired
@@ -31,7 +32,7 @@ public class GiftController {
         this.giftCertificateService = giftCertificateService;
     }
 
-    @GetMapping()
+    @GetMapping(UrlParts.READ)
     public List<GiftDTO> getAll() {
         log.info("get_all");
         return GiftLinker.addLinkToGiftDTO(giftCertificateService.getAll());

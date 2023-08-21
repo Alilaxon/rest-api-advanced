@@ -8,6 +8,8 @@ import com.epam.esm.persistance.dao.RoleRepository;
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.builders.UserBuilder;
 import com.epam.esm.persistance.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
@@ -39,11 +42,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(UserDTO userDTO) throws UserAlreadyRegisteredException {
-      if(userRepository.findByUserName(userDTO.getUserName()).isPresent()){
-          throw new UserAlreadyRegisteredException(userDTO.getUserName());
+        log.info("User with name = {} will be create",userDTO.getUsername());
+      if(userRepository.findByUserName(userDTO.getUsername()).isPresent()){
+          throw new UserAlreadyRegisteredException(userDTO.getUsername());
       }
         User user = UserBuilder.builder()
-                .userName(userDTO.getUserName())
+                .userName(userDTO.getUsername())
                 .email(userDTO.getEmail())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .roles(List.of(roleRepository.findByName("ROLE_USER").get()))

@@ -5,6 +5,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,12 +25,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private static final Logger log = LogManager.getLogger(JwtRequestFilter.class);
 
     private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    public JwtRequestFilter(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader =  request.getHeader("Authorization");
         String username = null;
         String jwt = null;
-        if (authHeader != null && authHeader.startsWith("Bearer_")) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
             log.info("Token {} ", authHeader);
             jwt = authHeader.substring(7);
             try {

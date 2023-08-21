@@ -20,9 +20,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String USER = "ROLE_USER";
+    private final String USER = "USER";
 
-    private final String ADMIN = "ROLE_ADMIN";
+    private final String ADMIN = "ADMIN";
 
     private UserService userService;
 
@@ -49,11 +49,21 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                //test controllers
                 .antMatchers("/greetings/secured").authenticated()
                 .antMatchers("/greetings/unsecured").permitAll()
-                .antMatchers("/auth").permitAll()
+                // auth controller
+                .antMatchers("/auth/token").permitAll()
+                .antMatchers("/auth/token/refresh").authenticated()
                 .antMatchers("/registration").permitAll()
-                .antMatchers(UrlParts.GIFTS).permitAll()
+                //gift controller
+                .antMatchers(UrlParts.GIFTS+UrlParts.READ+"/**").hasAnyRole(USER,ADMIN)
+                .antMatchers(UrlParts.GIFTS+UrlParts.DELETE+"/**").hasRole(ADMIN)
+                .antMatchers(UrlParts.GIFTS+UrlParts.CREATE).hasRole(ADMIN)
+                .antMatchers(UrlParts.GIFTS+UrlParts.UPDATE).hasRole(ADMIN)
+                // order controller
+                .antMatchers(UrlParts.ORDERS).hasAnyRole(USER,ADMIN)
+                .antMatchers(UrlParts.GIFTS).hasRole(ADMIN)
                 .antMatchers("/greetings/info").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()

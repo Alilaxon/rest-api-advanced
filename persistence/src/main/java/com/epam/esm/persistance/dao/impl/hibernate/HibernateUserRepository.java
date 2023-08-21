@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,14 +62,13 @@ public class HibernateUserRepository implements UserRepository {
 
     @Override
     public Optional<User> findByUserName(String name) {
-        try {
-            return Optional.ofNullable(
-                    (User) entityManager.createQuery("SELECT u FROM User u WHERE u.userName = ?1")
-                            .setParameter(1, name)
-                            .getSingleResult());
+        List<User> userList;
+        userList = entityManager.createQuery("SELECT u FROM User u WHERE u.userName = ?1")
+                .setParameter(1, name)
+                .getResultList();
+        if (userList.size() == 0) return Optional.empty();
 
-        } catch (NoResultException e){
-            return Optional.empty();
-        }
+        return Optional.ofNullable(userList.get(0));
     }
 }
+

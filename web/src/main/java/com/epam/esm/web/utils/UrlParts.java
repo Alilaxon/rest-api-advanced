@@ -19,4 +19,16 @@ public class UrlParts {
     public static final String DELETE = "/delete";
 
     public static final String ID = "/{id}";
+
+    public static final String REGISTRATION = "/registration";
+
+    public static final String AUTH = "/auth";
+
+    public static final String TOKEN = "/token";
+
+    public static final String REFRESH = "/refresh";
+
+    public static final String FILL_DATABASE = "/fillDataBase";
+
+    public static final String CLEAN_DATABASE = "/cleanDataBase";
 }

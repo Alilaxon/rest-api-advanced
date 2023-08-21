@@ -41,6 +41,6 @@ public class GreetingsController {
     public String userData(Principal principal){
         System.out.println(principal.toString());
        // principal.getName();
-        return "info+name";
+        return "info =" + principal.getName();
     }
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 class UserDTOTest {
@@ -22,11 +21,11 @@ class UserDTOTest {
         String password = "123456";
         String email = "user@epam.com";
         userDTO.setId(id);
-        userDTO.setUserName(username);
+        userDTO.setUsername(username);
         userDTO.setPassword(password);
         userDTO.setEmail(email);
         assertEquals(userDTO.getId(), id);
-        assertEquals(userDTO.getUserName(), username);
+        assertEquals(userDTO.getUsername(), username);
         assertEquals(userDTO.getPassword(), password);
         assertEquals(userDTO.getEmail(),email);
      }

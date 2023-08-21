@@ -57,7 +57,7 @@ class HibernateUserRepositoryTest {
     @Test
     @Order(4)
     void findByUserName() {
-        assertEquals(user,userRepository.findByUserName(user.getUserName()));
+        assertEquals(user.getUserName(),userRepository.findByUserName(user.getUserName()).get().getUserName());
     }
 
     @Test
