@@ -37,7 +37,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 
@@ -63,7 +62,10 @@ public class SecurityConfig {
                 .antMatchers(UrlParts.GIFTS+UrlParts.UPDATE).hasRole(ADMIN)
                 // order controller
                 .antMatchers(UrlParts.ORDERS).hasAnyRole(USER,ADMIN)
-                .antMatchers(UrlParts.GIFTS).hasRole(ADMIN)
+                // tag controller
+                .antMatchers(UrlParts.TAGS).hasRole(ADMIN)
+                // user controller
+                .antMatchers(UrlParts.USERS).hasRole(ADMIN)
                 .antMatchers("/greetings/info").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()

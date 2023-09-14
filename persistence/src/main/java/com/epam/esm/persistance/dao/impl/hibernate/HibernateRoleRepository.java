@@ -18,7 +18,7 @@ public class HibernateRoleRepository implements RoleRepository {
     private static final Logger log = LogManager.getLogger(HibernateUserRepository.class);
 
     private final EntityManager entityManager;
-    @Autowired
+
     public HibernateRoleRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

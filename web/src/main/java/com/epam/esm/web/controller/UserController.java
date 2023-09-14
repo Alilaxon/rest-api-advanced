@@ -8,6 +8,7 @@ import com.epam.esm.web.utils.UrlParts;
 import com.epam.esm.web.utils.UserLinker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,25 +26,30 @@ public class UserController {
     }
     @GetMapping
     public List<UserDTO> getAll(){
-
         return UserLinker.addLinkToGiftDTO(userService.getAll());
     }
     @GetMapping(UrlParts.ID)
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO get(@PathVariable ("id") Long id) throws NoSuchUserException {
-
+    public UserDTO get(@PathVariable ("id") Long id)
+            throws NoSuchUserException {
         return userService.getById(id);
     }
 
-    @GetMapping("/fillDataBase")
-    public Integer fillDataBase (){
+    @GetMapping(UrlParts.FILL_DATABASE)
+    public ResponseEntity<String> fillDataBase (){
         userService.fillTable();
-        return userService.getAll().size();
+        int numberOfUsers = userService.getAll().size();
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(numberOfUsers + " users have been created");
     }
 
-    @GetMapping("/cleanDataBase")
-    public Integer cleanDataBase (){
+    @GetMapping(UrlParts.CLEAN_DATABASE)
+    public ResponseEntity<String> cleanDataBase (){
         userService.cleanTable();
-        return userService.getAll().size();
+        int numberOfUsers = userService.getAll().size();
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(numberOfUsers + " users have been found after cleaning");
     }
 }

@@ -1,10 +1,13 @@
 package com.epam.esm.web.utils.jwt;
 
 import com.epam.esm.web.DTO.JwtResponse;
+import com.epam.esm.web.controller.AuthController;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -16,6 +19,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider {
+
+    private static final Logger log = LoggerFactory.getLogger(JwtTokenProvider.class);
 
     private final String secret;
 

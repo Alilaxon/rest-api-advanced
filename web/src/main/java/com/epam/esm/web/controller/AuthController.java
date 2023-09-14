@@ -45,17 +45,16 @@ public class AuthController {
     }
 
     @PostMapping(UrlParts.AUTH+UrlParts.TOKEN)
-    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest)
+    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest request)
             throws BadCredentialsException {
-
-       // UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
-
-        log.info(String.valueOf(authRequest));
-      Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                authRequest.getUsername(),
-                authRequest.getPassword()));
+        // как это работало без authenticationManager
+       // UserDetails userDetails = userService.loadUserByUsername(request.getUsername());
+        log.info(String.valueOf(request));
+      Authentication authentication = authenticationManager
+              .authenticate(new UsernamePasswordAuthenticationToken(
+                request.getUsername(),
+                request.getPassword()));
         log.info(String.valueOf(authentication));
-
         return ResponseEntity.ok(jwtTokenProvider.generateToken(
                 authentication.getName(),
                 authentication.getAuthorities()));
@@ -72,8 +71,9 @@ public class AuthController {
     @PostMapping(UrlParts.REGISTRATION)
     public ResponseEntity<?> createNewUser(@RequestBody UserDTO userDTO)
             throws UserAlreadyRegisteredException {
-
-        if (userDTO.getUsername() == null) return new ResponseEntity<>("error of fields",HttpStatus.BAD_REQUEST);
+        if (userDTO.getUsername() == null) {
+            return new ResponseEntity<>("error of fields",HttpStatus.BAD_REQUEST);
+        }
         userService.create(userDTO);
         return new ResponseEntity<>("User was created", HttpStatus.ACCEPTED);
     }

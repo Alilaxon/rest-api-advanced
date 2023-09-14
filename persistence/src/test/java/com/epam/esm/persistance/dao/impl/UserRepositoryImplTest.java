@@ -65,8 +65,4 @@ class UserRepositoryImplTest {
         assertEquals(userRepository.get(user.getId()), Optional.empty());
     }
 
-    @Test
-    void deleteByPartOfName() {
-
-    }
 }

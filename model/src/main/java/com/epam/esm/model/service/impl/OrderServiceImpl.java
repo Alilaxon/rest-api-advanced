@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,10 +40,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order create(OrderDTO orderDTO) throws NoSuchUserException, NoSuchGiftException {
+    public Order create(OrderDTO orderDTO ,String name) throws NoSuchUserException, NoSuchGiftException {
 
-        User user = userRepository.get(orderDTO.getUserId())
-                .orElseThrow(() -> new NoSuchUserException(orderDTO.getId()));
+        User user = userRepository.findByUserName(name).get();
         var gift = giftRepository.findById(orderDTO.getGiftId())
                 .orElseThrow(() -> new NoSuchGiftException((orderDTO.getId())));
         Order order = OrderBuilder.builder()
@@ -56,9 +56,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getAllOrdersByUserId(Long id) {
-
-        return orderRepository.getAllByUserId(id)
+    public List<OrderDTO> getAllOrdersByUser(String name) {
+        long userId = userRepository.findByUserName(name).get().getId();
+        return orderRepository.getAllByUserId(userId)
                 .stream()
                 .map(order -> new OrderDTO(
                         order.getId(),
@@ -102,6 +102,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void cleanTable() {
-
+      List<Order> orderList = orderRepository.getAll();
+        for (Order order: orderList) {
+          orderRepository.delete(order);
+        }
     }
 }

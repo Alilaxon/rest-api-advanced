@@ -6,8 +6,8 @@ import com.epam.esm.persistance.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Primary
+@Deprecated
 public class UserRepositoryImpl implements UserRepository {
 
     private static final Logger log = LogManager.getLogger(UserRepositoryImpl.class);
@@ -46,8 +46,10 @@ public class UserRepositoryImpl implements UserRepository {
             return Optional.ofNullable(user);
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.info("user search error");
+            return Optional.empty();
         }
+
     }
 
     @Override
@@ -63,7 +65,7 @@ public class UserRepositoryImpl implements UserRepository {
             }
             statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.info("something went wrong");
         }
         return users;
     }
@@ -79,7 +81,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.info("something went wrong");
         }
     }
 
@@ -93,7 +95,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.execute();
             statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.info("something went wrong");
         }
     }
 
@@ -107,13 +109,26 @@ public class UserRepositoryImpl implements UserRepository {
             statement.execute();
             statement.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            log.info("something went wrong");
         }
     }
 
     @Override
     public Optional<User> findByUserName(String name) {
-        //TODO
-        return Optional.empty();
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("SELECT * FROM users WHERE user_name=?");
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            User user = null;
+            while (resultSet.next()) {
+                user = UserMapper.extractUser(resultSet);
+            }
+            statement.close();
+            return Optional.ofNullable(user);
+        } catch (SQLException e) {
+            log.info("something went wrong");
+            return Optional.empty();
+        }
     }
 }

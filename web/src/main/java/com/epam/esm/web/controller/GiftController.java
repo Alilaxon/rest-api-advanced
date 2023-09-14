@@ -8,7 +8,6 @@ import com.epam.esm.persistance.entity.GiftCertificate;
 import com.epam.esm.web.utils.GiftLinker;
 import com.epam.esm.web.utils.Sorter;
 import com.epam.esm.web.utils.UrlParts;
-import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,9 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -46,7 +47,6 @@ public class GiftController {
              @RequestParam(name = "page", required = false, defaultValue = "1") Long page,
              @RequestParam(name = "size", required = false, defaultValue = "50") Long size)
             throws NoSuchTagNameException {
-
         log.info("get all by tag = {}", tag);
         if (order.equals("desc")) {
             log.info("sort all by desc");
@@ -75,7 +75,6 @@ public class GiftController {
             throws GiftNameIsReservedException, InvalidTagException, InvalidGiftDtoException {
         log.info("Gift '{}' will be create", giftDto.getName());
         Long id = giftCertificateService.create(giftDto).getId();
-
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
@@ -86,7 +85,6 @@ public class GiftController {
         GiftDTO giftDTO = giftCertificateService.get(id);
         Link selfLink = linkTo(methodOn(GiftController.class).getById(
                 giftDTO.getId())).withSelfRel();
-
         return giftDTO.add(selfLink);
     }
 
@@ -95,7 +93,6 @@ public class GiftController {
                                        @RequestBody GiftDTO giftDto) {
         log.info("Update Gift by id = '{}'", id);
         Long resultId = giftCertificateService.update(id, giftDto).getId();
-
         return ResponseEntity.status(HttpStatus.CREATED).body(resultId);
     }
 
