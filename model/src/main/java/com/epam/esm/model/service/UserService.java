@@ -21,4 +21,6 @@ public interface UserService extends TableFiller,UserDetailsService {
 
     Long deleteById(Long id);
 
+    User createAdmin(String name,String password,String email) throws UserAlreadyRegisteredException;
+
 }

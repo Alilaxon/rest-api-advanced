@@ -7,6 +7,7 @@ import com.epam.esm.model.service.UserService;
 import com.epam.esm.persistance.dao.RoleRepository;
 import com.epam.esm.persistance.dao.UserRepository;
 import com.epam.esm.persistance.dao.builders.UserBuilder;
+import com.epam.esm.persistance.entity.Role;
 import com.epam.esm.persistance.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,8 @@ class UserServiceImplTest {
 
     private User user;
 
+    private  Role role;
+
     private UserDTO userDTO;
 
     @BeforeEach
@@ -47,10 +50,15 @@ class UserServiceImplTest {
                 .email(email)
                 .build();
         userDTO = new UserDTO(id, username, email, password);
+
+        role = new Role();
+        role.setRoleName("ROLE_USER");
     }
 
     @Test
     void create() throws UserAlreadyRegisteredException {
+        when(userRepository.findByUserName(userDTO.getUsername())).thenReturn(Optional.empty());
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.ofNullable(role));
         assertEquals(userService.create(userDTO), user);
     }
 

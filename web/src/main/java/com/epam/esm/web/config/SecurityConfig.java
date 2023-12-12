@@ -51,18 +51,17 @@ public class SecurityConfig {
                 //test controllers
                 .antMatchers("/greetings/secured").authenticated()
                 .antMatchers("/greetings/unsecured").permitAll()
+                //admin controller
+                .antMatchers(UrlParts.ADMIN+"/**").permitAll()
                 // auth controller
                 .antMatchers(UrlParts.AUTH+UrlParts.TOKEN).permitAll()
-              //  .antMatchers("/auth/token").permitAll()
-              //  .antMatchers("/auth/token/refresh").authenticated()
                 .antMatchers(UrlParts.AUTH+UrlParts.TOKEN+UrlParts.REFRESH).authenticated()
-             //   .antMatchers("/registration").permitAll()
                 .antMatchers(UrlParts.REGISTRATION).permitAll()
                 //gift controller
                 .antMatchers(UrlParts.GIFTS+UrlParts.READ+"/**").hasAnyRole(USER,ADMIN)
-                .antMatchers(UrlParts.GIFTS+UrlParts.DELETE+"/**").hasRole(ADMIN)
-                .antMatchers(UrlParts.GIFTS+UrlParts.CREATE).hasRole(ADMIN)
-                .antMatchers(UrlParts.GIFTS+UrlParts.UPDATE).hasRole(ADMIN)
+                .antMatchers(UrlParts.GIFTS+"/**").hasRole(ADMIN)
+                .antMatchers(UrlParts.GIFTS+UrlParts.CREATE+"/**").hasRole(ADMIN)
+//                .antMatchers(UrlParts.GIFTS+UrlParts.UPDATE).hasRole(ADMIN)
                 // order controller
                 .antMatchers(UrlParts.ORDERS).hasAnyRole(USER,ADMIN)
                 // tag controller
@@ -72,6 +71,7 @@ public class SecurityConfig {
                 .antMatchers("/greetings/info").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
+                // JWT filter
                 .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

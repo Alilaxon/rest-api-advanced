@@ -10,6 +10,8 @@ public class UrlParts {
 
     public static final String ORDERS = "/orders";
 
+    public static final String ADMIN = "/admin";
+
     public static final String CREATE = "/create";
 
     public static final String READ = "/read";

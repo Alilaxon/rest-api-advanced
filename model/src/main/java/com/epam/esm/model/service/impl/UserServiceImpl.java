@@ -84,6 +84,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User createAdmin(String name,String password,String email) throws UserAlreadyRegisteredException {
+        if(userRepository.findByUserName(name).isPresent()){
+            throw new UserAlreadyRegisteredException(name);
+        }
+        User user = UserBuilder.builder()
+                .userName(name)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .roles(List.of(roleRepository.findByName("ROLE_ADMIN").get()))
+                .build();
+        userRepository.save(user);
+        return user;
+    }
+
+    @Override
     public Optional<User> findByUserName(String name) {
         return userRepository.findByUserName(name);
     }
