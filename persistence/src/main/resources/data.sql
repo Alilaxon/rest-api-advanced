@@ -51,7 +51,7 @@ INSERT INTO users
 VALUES (DEFAULT,'Harry','123456','Harry@gmail.com'),
 (DEFAULT,'Dobby','123456','Dobby@gmail.com'),
 (DEFAULT,'Draco','123456','Draco@gmail.com'),
-(DEFAULT,'Neville','123456','Draco@gmail.com');
+(DEFAULT,'Neville','123456','Neville@gmail.com');
 
 INSERT INTO roles VALUES
 (DEFAULT,'ROLE_USER'),(DEFAULT,'ROLE_ADMIN');

@@ -49,6 +49,7 @@ public class AuthController {
             throws BadCredentialsException {
         // как это работало без authenticationManager
        // UserDetails userDetails = userService.loadUserByUsername(request.getUsername());
+        System.out.println(request.toString());
         log.info(String.valueOf(request));
       Authentication authentication = authenticationManager
               .authenticate(new UsernamePasswordAuthenticationToken(
